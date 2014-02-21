@@ -1,0 +1,5 @@
+Version 2.1 - Aug 23, 2012, by Eddie Carle
+
+* Code transfered from svn to git
+* Added SQL Support included a MySQL engine
+* Converted package to autotools

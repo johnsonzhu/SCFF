@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="gb2312" standalone="yes" ?>
+<ServiceRoot>
+    <Category Name="Echo" NameSpace="fcgi::demo::echo" ID="0x0001" SvcH="../echo.h" Dir="/tmp/" ClassDeclare="" ParamDefH="" NeedInit="1" HandleSysErr="0" OnTimer="0">
+        <Service Name="GetLoc" ReqCmdId="" RespCmdId="">
+            <Request>
+                <Item Name="rParams" Type="web_solution::web_framework::CActionParams" />
+            </Request>
+            <Response>
+                <Item Name="rData" Type="web_solution::web_framework::CWebViewData" />
+                <Item Name="rCntl" Type="web_solution::web_framework::CWebSvcCntl" />
+            </Response>
+        </Service>
+    </Category>
+    <Timers Name="" />
+</ServiceRoot>

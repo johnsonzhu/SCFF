@@ -1,0 +1,21 @@
+<html >
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>UTF-8 Echo Form</title>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+	</head>
+    <body>
+		<h4>enctype="multipart/form-data"</h4>
+		<form action="echo.fcgi?getVar=testing&amp;secondGetVar=tested&amp;utf8GetVarTest=проверка&amp;enctype=multipart" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+			Name: <input type="text" name="+= aquí está el campo" value="Él está con un niño" /> <br />
+			File: <input type="file" name="aFile" /> <br />
+			<input type="submit" name="submit" value="submit" />
+		</form>
+      <h4>enctype="application/x-www-form-urlencoded"</h4>
+		<form action="echo.fcgi?getVar=testing&amp;secondGetVar=tested&amp;utf8GetVarTest=проверка&amp;enctype=url-encoded" method="post" enctype="application/x-www-form-urlencoded" accept-charset="utf-8">
+			Name: <input type="text" name="+= aquí está el campo" value="Él está con un niño" /> <br />
+			File: <input type="file" name="aFile" /> <br />
+			 <input type="submit" name="submit" value="submit" />
+		 </form>
+	</body>
+</html>

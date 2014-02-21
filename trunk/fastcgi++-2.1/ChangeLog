@@ -1,0 +1,3037 @@
+commit dbe4630d3e6461c5c3eb78903fc61201b9cd047e
+Author: Eddie Carle <eddie@ertech.org>
+Date:   Wed Aug 22 20:29:46 2012 -0600
+
+    Version 2.1
+
+ README.in |    2 +-
+ bootstrap |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit b7f93511fad7cd2b649c486a0d992b26449ed6aa
+Author: Eddie Carle <eddie@ertech.org>
+Date:   Wed Aug 22 11:53:48 2012 -0600
+
+    Updated boost.m4 macro to lastest version
+
+ config/boost.m4 |   67 +++++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 files changed, 60 insertions(+), 7 deletions(-)
+
+commit b3d7f99515437158d946bbbb9df6570a231a5b25
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Sat May 26 19:42:39 2012 -0600
+
+    Possible after end iterator dereference
+    
+    Request::handler() was checking the POST content type in a rather risky
+    way. If the std::string was shorter than the literals (including the
+    null terminator) there was a possibility of dereferencing a bad string
+    iterator.
+
+ src/request.cpp |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 536a0c7e620a202118d5a526257ce61663c526c4
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Sat May 26 19:17:49 2012 -0600
+
+    Fixed possible end iterator dereference
+    
+    The iterator used in Http::decodeUrlEncoded() had the possibility to be
+    dereferenced as an end() value. The code has been slightly rearranged to
+    fix this.
+
+ src/http.cpp |   28 ++++++++++++++++------------
+ 1 files changed, 16 insertions(+), 12 deletions(-)
+
+commit 0a60011900ff3625c65525132f582afff450fdf1
+Author: David Schneider <d.schneider@dimoco.at>
+Date:   Fri May 11 08:48:38 2012 -0600
+
+    IPv6 parser accepted non hex characters
+    
+    Only valid hexadecimal characters 0-9a-fA-F should be accepted by the
+    IPv6 address parser (Fastcgipp::Http::Address::assign) and it's
+    respective operator>>. At the moment all alpha numeric characters are
+    accepted.
+
+ src/http.cpp |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+commit 3f2a7733002f2b9644ccb22e171237d4baa90954
+Author: Wangsheng Jiang <jiangwangsheng@gmail.com>
+Date:   Mon Apr 30 08:36:58 2012 -0600
+
+    Removed potential for read overflow
+    
+    Fastcgipp::Http::percentEscapedToRealBytes() was checking for an
+    end of string equality to terminate instead of a greater or equal.
+
+ src/http.cpp |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 583e488a00d28059cd0c3d6287632c88db17fc67
+Author: Wangsheng Jiang <jiangwangsheng@gmail.com>
+Date:   Mon Apr 30 08:28:48 2012 -0600
+
+    Http::Environment::requestMethod now initialized
+    
+    Http::Environment::requestMethod was not being initialized in the
+    constructor. This could potentially cause a crash in
+    Request<charT>::errorHandler.
+
+ include/fastcgi++/http.hpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 9f496201e7aee501e1e40c535d492b6f71acb569
+Author: Eddie Carle <eddie@ertech.org>
+Date:   Wed Apr 25 11:24:26 2012 -0600
+
+    Fcgistream::Encoder::m_state is now initialized
+    
+    The m_state member of the Fcgistream::Encoder was not being explicitly
+    initialized. This was cropping as an issue on certain compilers. It is
+    now explicitly initialized to NONE.
+
+ include/fastcgi++/fcgistream.hpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit ffaf01ca2e1d564569d9dbbddf07a7d75fd3e7ab
+Author: Eddie Carle <eddie@ertech.org>
+Date:   Tue Apr 24 19:50:25 2012 -0600
+
+    Prepared tree for 2.1beta
+
+ bootstrap |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit fd050a110871310189efac244799321a8e2b7bad
+Author: Eddie Carle <eddie@ertech.org>
+Date:   Tue Apr 24 19:47:17 2012 -0600
+
+    Prepared tree for 2.1
+
+ README.in |    2 +-
+ bootstrap |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 7edf8f4533b504e1a0597a1828994addcbfb7fb7
+Author: Eddie Carle <eddie@ertech.org>
+Date:   Tue Apr 24 19:40:12 2012 -0600
+
+    Version 2.0
+
+ README.in |    2 +-
+ bootstrap |    5 +++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+commit c4f2589b4d9121be4ae2f5d5117a42a85f67500c
+Author: Eddie Carle <eddie@ertech.org>
+Date:   Tue Apr 24 19:12:26 2012 -0600
+
+    Updated TODO file
+
+ TODO |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 4eb4270f36be5efaf67b5ba68849578ab7402be8
+Author: Eddie Carle <eddie@ertech.org>
+Date:   Thu Apr 12 11:57:58 2012 -0600
+
+    Added boolean tester for ip addresses
+
+ include/fastcgi++/http.hpp |    2 ++
+ src/http.cpp               |    8 ++++++++
+ 2 files changed, 10 insertions(+), 0 deletions(-)
+
+commit 13a6ea6919e7aee7939273afec84ef9967cfd2c6
+Author: Eddie Carle <eddie@ertech.org>
+Date:   Sat Mar 31 18:55:45 2012 -0600
+
+    Added const parameter() accessors to Query
+
+ include/asql/query.hpp |   25 ++++++++++++++++++++++---
+ 1 files changed, 22 insertions(+), 3 deletions(-)
+
+commit c9e6f663c84c00ce34cb1a8037b79f7a9ffd301e
+Author: Eddie Carle <eddie@ertech.org>
+Date:   Thu Mar 29 11:01:28 2012 -0600
+
+    Fixed bug in Address::assign()
+    
+    The Address::assign() function was not reading in ipv4 address with a
+    final byte that was a single digit (<10).
+
+ src/http.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 9514f3db84e0f32f2252a43108a0e3bcdb5220d5
+Author: Eddie Carle <eddie@ertech.org>
+Date:   Wed Mar 28 20:40:53 2012 -0600
+
+    Changed Http::Address to IPv6
+    
+    The Http::Address class now handles ipv6 addresses. The base data type
+    is a 16 bytes array. IPv4 address are stored in it at ipv6-ipv4 map
+    addresses.
+
+ doc/doc.hpp                |  150 +++++---------
+ examples/database.cpp      |   21 +-
+ include/fastcgi++/http.hpp |   87 +++++---
+ src/http.cpp               |  527 ++++++++++++++++++++++++++++++++++----------
+ 4 files changed, 525 insertions(+), 260 deletions(-)
+
+commit 9f9f1a15a1952835d8633d03fc2abe564dabc272
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Sat Feb 18 20:17:17 2012 -0700
+
+    Fixed simple mistake from last commit
+
+ src/http.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 35e9faa32d9ad559d4928debf0d40ee1d9eb68a5
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Sat Feb 18 19:59:24 2012 -0700
+
+    Accommodating Chrome/Safari file multipart
+    
+    Both Chrome and Safari have taken to adding an additional "\r\n" to the
+    end of multipart encoded POST files. The system now checks for said
+    character sequence at the end of the file and truncates if it exists.
+    
+    This of course breaks POSTing of files with Mozilla/IE that legitimately
+    end with a "\r\n" but I'm not sure how else to proceed.
+
+ src/http.cpp |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit df56d656427760234a25c0df85eb9676d9f3dc5c
+Author: Eddie Carle <eddie@ertech.org>
+Date:   Thu Feb 16 17:42:46 2012 -0700
+
+    Added check to prevent crash
+    
+    Badly formed multipart POST data could have resulted in negative
+    bodySize values that could behave very badly. If there are detected the
+    bodySize is just set to zero.
+
+ src/http.cpp |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 6c7077dd5a639c524649cc0f0b15b41ad8ac6954
+Author: Eddie Carle <eddie@ertech.org>
+Date:   Thu Dec 29 12:44:50 2011 -0700
+
+    Eliminated ineffecient POST handling
+    
+    The Http::Environment class was filling its POST data in a very stupid
+    way. It was constantly re-copying data around and re-parsing it. The
+    system now simple waits until all POST data has been recieved into a
+    single buffer before parsing it. If there is any content beyond the
+    content length passed from the client it is truncated. Special thanks to
+    Smeesters Olivier for catching this.
+
+ include/fastcgi++/http.hpp    |   34 ++---
+ include/fastcgi++/request.hpp |    5 +-
+ src/http.cpp                  |  310 +++++++++++++++++++++--------------------
+ src/request.cpp               |   34 +++---
+ 4 files changed, 190 insertions(+), 193 deletions(-)
+
+commit f16ff2d22ec7cdea550bf9cda2a8e327d42ab772
+Author: David Schneider <d.schneider@dimoco.at>
+Date:   Tue Sep 27 10:25:20 2011 -0600
+
+    sigaction struct should not be initted with memset
+    
+    The setupSignals function now initializes its sigaction structure
+    properly instead of using std::memset() to zero it.
+
+ src/manager.cpp |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit dfe0eeca22b6e21e40108ffc71d9f63e061a7283
+Author: Eddie Carle <eddie@ertech.org>
+Date:   Mon Sep 26 14:11:49 2011 -0600
+
+    Structure used to setup signals not fully initted
+    
+    The sigaction structure being used for signal setup was not being
+    completely initialized.
+
+ src/manager.cpp |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit a2b96eccf7fbdd930ae2499c82a3c1b6b53180bd
+Author: David Schneider <d.schneider@dimoco.at>
+Date:   Mon Sep 26 14:06:55 2011 -0600
+
+    Changed member init orders
+    
+    The member objects of some classes were not being initialized in the
+    same order that they were defined in the classes.
+
+ include/fastcgi++/http.hpp    |    6 +++---
+ include/fastcgi++/request.hpp |    2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+commit 4174e44aee6d8bc6425cd06cde515289dba76337
+Author: Eddie Carle <eddie@ertech.org>
+Date:   Mon Sep 26 13:48:52 2011 -0600
+
+    Manager terminate() and stop() not waking
+    
+    The Manager terminate() and stop() function were not waking the handler
+    up when it was sleeping. This meant that it simply stayed sleeping
+    instead of returning.
+
+ include/fastcgi++/manager.hpp |   20 ++++++++++----------
+ src/manager.cpp               |   16 ++++++++++++++--
+ 2 files changed, 24 insertions(+), 12 deletions(-)
+
+commit 5c98540ba22cc9837bd212a3b67f29c6f35cb66f
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Sat Sep 24 12:34:08 2011 -0600
+
+    Added --without-asql flag to ./configure script
+
+ configure.ac.in |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+commit f0f24094d2e7deefe133e1546a74a8d524811d82
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Sat Sep 24 12:07:47 2011 -0600
+
+    Initialized Transceiver wake character
+    
+    The Transceiver wake() function was writing an uninitialized character
+    value down the pipe to wake it from a sleep. Valgrind whines about this.
+
+ src/transceiver.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit a686227d0dbfe4006f4e2935711375c954d444bb
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Tue Sep 20 19:09:34 2011 -0600
+
+    Can now disable the signal handler setup
+    
+    The Manager class would previously always setup the appropriate signal
+    handlers for most FastCGI applications. This has proved inadequate for
+    some situations so a boolean parameter has been added to the Manager
+    class constructor that allows for the disabling of this functionality.
+
+ include/fastcgi++/manager.hpp |    8 +++++---
+ src/manager.cpp               |    6 +++++-
+ 2 files changed, 10 insertions(+), 4 deletions(-)
+
+commit cc417d7dbb78bcb91f8faeafc774ea0ab6c55920
+Author: Melvin Rook <melvin@melvinrook.nl>
+Date:   Mon Aug 22 12:45:57 2011 -0600
+
+    Max post size of zero now respects unilimited
+    
+    The request handler() function was not properly checking for a zero
+    m_maxPostSize value to indicate no post size restriction.
+
+ src/request.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 5d0e7026076fbb51bd477f0999134af3ed8a27e3
+Author: Alexander Kass <kass.soft@gmail.com>
+Date:   Tue Aug 2 15:26:14 2011 -0600
+
+    Fixed potential infinite loop in transceiver
+    
+    In the case that a connection is terminated and no POLL error flag is
+    set, read() returns 0 and the system goes into an infinite loop. This
+    change checks for a zero return and deals with it.
+
+ src/transceiver.cpp |   12 ++++++++++--
+ 1 files changed, 10 insertions(+), 2 deletions(-)
+
+commit 6852ded96fa95dd3e956e13e1eff9ea25e0a5f9d
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Thu Jun 23 15:31:19 2011 -0600
+
+    Fixed deadlock situation in Manager
+    
+    The use of the upgradeable locks in the Manager function has lead to
+    potential deadlock situations. If two "pushes" are done simultaneously
+    both calls will sit and wait for an exclusive lock on requests.
+
+ include/fastcgi++/manager.hpp |   13 +++++++++----
+ 1 files changed, 9 insertions(+), 4 deletions(-)
+
+commit 80c66293b76c71521899e955c31378fce503ddd1
+Merge: d05f17d 2a4b2be
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Wed Jun 22 11:59:56 2011 -0600
+
+    Merge branch 'boostIostreams'
+    
+    Conflicts:
+    	include/asql/asql.hpp
+    	include/asql/data.hpp
+    	include/asql/mysql.hpp
+    	include/asql/query.hpp
+    	src/mysql.cpp
+    
+    Just using everything from the boostIostreams branch.
+
+commit 2a4b2be0b01253dbe7db153366d3ad8e5ebf65ce
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Wed Jun 22 11:40:48 2011 -0600
+
+    Added fixed boost code_converter.hpp file
+    
+    I've given up on trying to get the boost people to apply a patch I've
+    made that fixes a bug in the iostreams code_converter that breaks this
+    branch. Instead I'll just add it into the build tree for now. Maybe some
+    day they'll apply it.
+
+ include/Makefile.am                        |    5 +-
+ include/boost/iostreams/code_converter.hpp |  432 ++++++++++++++++++++++++++++
+ 2 files changed, 435 insertions(+), 2 deletions(-)
+
+commit 8314baec32d301a41299cfa1d67917dd5c961576
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Wed Jun 22 10:29:10 2011 -0600
+
+    Updated boost.m4 file to latest version
+
+ config/boost.m4 |  215 +++++++++++++++++++++++++++++++++++++++---------------
+ 1 files changed, 155 insertions(+), 60 deletions(-)
+
+commit d014b26495cd0733033777ab00582199be2f03d2
+Merge: 8e26cd5 f3247d2
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Jun 20 16:44:24 2011 -0600
+
+    Merge branch 'boostIostreams' of ssh://git.sv.gnu.org/srv/git/fastcgipp into boostIostreams
+
+commit 8e26cd5a290233e3fedb3b9006e60b003b13d6b2
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Jun 20 16:42:01 2011 -0600
+
+    Added thread selection and count checkers
+    
+    You can now select which execution thread ASql should use when starting
+    a query or transaction. The default still selects the thread with the
+    smallest queue of queries.
+    
+    I have also added some functions to check the queue sizes for various
+    classes.
+
+ include/asql/asql.hpp         |   63 +++++++++++++++++++++++++++-------------
+ include/asql/mysql.hpp        |    4 +-
+ include/fastcgi++/manager.hpp |    7 ++++
+ src/mysql.cpp                 |    4 +-
+ 4 files changed, 53 insertions(+), 25 deletions(-)
+
+commit f3247d213a7a950482cf98efaeb93d03a0889a26
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Fri May 27 16:47:42 2011 -0600
+
+    Removed possible segfault from query queue
+    
+    A while loop that was popping queries off of the queue was not checking
+    to see if the queue was empty before doing so.
+
+ include/asql/asql.hpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 126146e38ea95b5a04e3acb1d691556e2be3fe30
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Wed May 18 09:49:59 2011 -0600
+
+    Added forward declaration of Manager to Request
+    
+    This issue was noticed by Smeesters Olivier. If the include files are
+    not included in the correct order Request derivations do not compile.
+
+ include/fastcgi++/request.hpp |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+commit 5e568f66ec6844ba0efdd9162d73d6ba47c4131a
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Thu May 12 20:32:46 2011 -0600
+
+    Added function to see of an ASql connection is running
+
+ include/asql/asql.hpp |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+commit 9ea36a002e7dfa2cca59786a52e212469c681ade
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Thu May 5 13:59:16 2011 -0600
+
+    Added ability to handle invalid dates from MySQL
+
+ src/mysql.cpp |   18 ++++++++++++++++--
+ 1 files changed, 16 insertions(+), 2 deletions(-)
+
+commit 554aad478823278f817f19c847c92d585246828f
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Wed Apr 27 13:08:25 2011 -0600
+
+    Added const accessors to ASql::Query classes
+
+ include/asql/query.hpp |   19 +++++++++++++++++++
+ 1 files changed, 19 insertions(+), 0 deletions(-)
+
+commit 0e9020834de54e4814801caa7318baa91fb6d090
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Apr 22 10:04:36 2011 -0600
+
+    Fixed bug in ASql with cancler
+    
+    I also added some default constructors whos lack of was messing up
+    compilation with clang.
+
+ include/asql/asql.hpp |    2 +-
+ include/asql/data.hpp |  223 ++++++++++++++++++-------------------------------
+ 2 files changed, 82 insertions(+), 143 deletions(-)
+
+commit 6ffaf0c45c14c77e6a58e31be7ff7ef2a38b7759
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Wed Apr 20 13:42:02 2011 -0600
+
+    Wrapped the fcgistream.hpp file in a ifndef/define
+
+ include/fastcgi++/fcgistream.hpp |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+commit 545e362524932b91d9d2de7ab696f63c1de7b992
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Wed Apr 20 13:41:33 2011 -0600
+
+    Added support for null buffers in ASql
+
+ src/mysql.cpp |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit 280fe5fc9f800fc2dbab4294c4ac1ac505473a8d
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Apr 4 15:37:23 2011 -0600
+
+    Fixed bug in MySQL custom placeholders
+
+ src/mysql.cpp |   12 +++++-------
+ 1 files changed, 5 insertions(+), 7 deletions(-)
+
+commit 691c65466e3eb99686172b0247a98524769a7d55
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Thu Mar 31 21:05:23 2011 -0600
+
+    Added ability to do named placeholders in ASql
+    
+    Still not fully tested
+
+ include/asql/mysql.hpp |  478 +++++++++++++++++++++++-------------------------
+ src/mysql.cpp          |   65 ++++++-
+ 2 files changed, 284 insertions(+), 259 deletions(-)
+
+commit 8aeb41e531509d2799437538e2ee1856fe473f4f
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Sat Mar 26 14:54:56 2011 -0600
+
+    Fixed bug in URL encoding
+    
+    The character '@' was being url encoded as a '!'.
+
+ include/fastcgi++/fcgistream.hpp |    4 ++--
+ src/fcgistream.cpp               |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+commit 459d3ddaabca589b5b0e148c9445448ef4a2b445
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Sat Mar 26 14:53:17 2011 -0600
+
+    Added accessor for the requests locale
+    
+    setloc() and getloc() are public whereas the locale object itself is now
+    private.
+
+ doc/doc.hpp                   |    8 ++++----
+ examples/authorizer.cpp       |    2 +-
+ examples/session.cpp          |    2 +-
+ examples/showgnu.cpp          |    2 +-
+ include/fastcgi++/request.hpp |   36 +++++++++++++++++++++---------------
+ 5 files changed, 28 insertions(+), 22 deletions(-)
+
+commit 10fdfa10304aa7bd73fe8222120918318a97662a
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Mar 22 12:26:45 2011 -0600
+
+    Added ability to limit size of POST data
+
+ include/fastcgi++/request.hpp |   18 ++++++++++++++++--
+ src/request.cpp               |   32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+), 2 deletions(-)
+
+commit 6e36e55910a205a25e4066dd706c94be7ee0afa2
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Mar 21 20:05:00 2011 -0600
+
+    Fixed improper handling of vector blob types
+
+ include/asql/data.hpp |    1 -
+ src/mysql.cpp         |    3 ++-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit d05f17dedbc5acf96c29112a2f65479a2a2801f4
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Sun Mar 20 14:39:42 2011 -0600
+
+    Removed long filenames from doxygen generation
+
+ doc/doxygen |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 2e0c11f61c7ab1cf75fd430f7a2f7085e457820e
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Sun Mar 20 14:39:42 2011 -0600
+
+    Removed long filenames from doxygen generation
+
+ doc/doxygen |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit bba65d5bbc22f3f326627e65c263411ade81c8ba
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Mar 18 14:27:14 2011 -0600
+
+    Fixed utf-8 bug in echo example
+
+ examples/echo-form.html |    8 ++++----
+ examples/echo.cpp       |    4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+commit 102eeb6eab88559f4446d6eaec775711fb1a5c37
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Mar 18 14:26:49 2011 -0600
+
+    Added ability to "steal" post data
+
+ include/fastcgi++/http.hpp |   22 ++++++++++++++++------
+ src/http.cpp               |    8 ++++----
+ 2 files changed, 20 insertions(+), 10 deletions(-)
+
+commit e3010b0843cc336afe550a5a956d0e4d2ebc2825
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Mar 18 13:45:52 2011 -0600
+
+    Made ASql::Data::Blob more versatile
+    
+    You can now derive from ASql::Data::Blob to create your own custom Blob
+    types. This way you can avoid doing large memory copies and have data
+    loaded directly into said object. My motivation for this was having
+    image data loaded directly into Magick::Blob objects. Things are nice
+    and fast now.
+
+ include/asql/data.hpp |   88 ++++++++++++++++++++++++++-----------------------
+ src/mysql.cpp         |   10 ++---
+ 2 files changed, 51 insertions(+), 47 deletions(-)
+
+commit 65222a90f3d77d2a66927ff4757f2d4a5d5ce781
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Mar 18 13:45:52 2011 -0600
+
+    Made ASql::Data::Blob more versatile
+    
+    You can now derive from ASql::Data::Blob to create your own custom Blob
+    types. This way you can avoid doing large memory copies and have data
+    loaded directly into said object. My motivation for this was having
+    image data loaded directly into Magick::Blob objects. Things are nice
+    and fast now.
+
+ include/asql/data.hpp |   88 ++++++++++++++++++++++++++-----------------------
+ src/mysql.cpp         |   10 ++---
+ 2 files changed, 51 insertions(+), 47 deletions(-)
+
+commit 5bd81ba03bb9cdd6fe0859c2e18ea8158b62e52d
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Mar 14 21:09:49 2011 -0600
+
+    Added and STL set container for indy variables
+
+ include/asql/data.hpp |  108 ++++++++++++++++++++++++++++++++++++++-----------
+ 1 files changed, 84 insertions(+), 24 deletions(-)
+
+commit 7a392f544bd01974873b3a54353864d78efca655
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Mar 14 21:09:49 2011 -0600
+
+    Added and STL set container for indy variables
+
+ include/asql/data.hpp |  108 ++++++++++++++++++++++++++++++++++++++-----------
+ 1 files changed, 84 insertions(+), 24 deletions(-)
+
+commit db0438a4d6e4d515ce3a3f265e2224f8369a59b5
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Mar 11 20:47:44 2011 -0700
+
+    Fixed bug with multi-row SQL parameters
+
+ include/asql/asql.hpp |    3 ++-
+ include/asql/data.hpp |    7 +++++++
+ src/mysql.cpp         |    1 +
+ 3 files changed, 10 insertions(+), 1 deletions(-)
+
+commit f7ed89be6fceab189793a97ac72e8d43ddb585e5
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Mar 11 20:47:44 2011 -0700
+
+    Fixed bug with multi-row SQL parameters
+
+ include/asql/asql.hpp |    3 ++-
+ include/asql/data.hpp |    7 +++++++
+ src/mysql.cpp         |    1 +
+ 3 files changed, 10 insertions(+), 1 deletions(-)
+
+commit ad3bf73a38c2619ac3aaf8cdfc6d1b6796bbe8c2
+Merge: 2a8ae31 287e825
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Tue Mar 1 21:22:33 2011 -0700
+
+    Merge branch 'master' of ssh://git.sv.gnu.org/srv/git/fastcgipp
+
+commit 2a8ae31c56d0d33a00411c69b6413a7baacb435b
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Tue Mar 1 21:18:19 2011 -0700
+
+    Fixed bug in mysql null conversion
+    
+    The MySQL type conversion no longer takes place if the values is marked
+    as null.
+
+ src/mysql.cpp |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 7123fd317d27ed3ec2b2123c1b950f40d2e60b8f
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Tue Mar 1 21:18:19 2011 -0700
+
+    Fixed bug in mysql null conversion
+    
+    The MySQL type conversion no longer takes place if the values is marked
+    as null.
+
+ src/mysql.cpp |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 1cfbd03e84395d8af9b536661aff89fdfc43ec92
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Feb 22 11:45:02 2011 -0700
+
+    Added functions to check for GET and POST values
+
+ include/fastcgi++/http.hpp |   26 ++++++++++++++++++++++++++
+ src/http.cpp               |   22 ++++++++++++++++++++++
+ 2 files changed, 48 insertions(+), 0 deletions(-)
+
+commit 287e8258277b7ca6e1010e8d50e895edb37e0a31
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Feb 22 11:16:18 2011 -0700
+
+    Made default ASql::Query template invalid
+    
+    The non-specialized template of ASql::Query is not valid so the
+    constructors are now private.
+
+ include/asql/query.hpp |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+commit 5367f3ce437ed1f8c4dd36c4893336be649a3cb1
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Feb 22 11:16:18 2011 -0700
+
+    Made default ASql::Query template invalid
+    
+    The non-specialized template of ASql::Query is not valid so the
+    constructors are now private.
+
+ include/asql/query.hpp |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+commit a6ba91994659c495a902de84bcd60c3a7c0122af
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Feb 22 09:18:31 2011 -0700
+
+    Removed useless Query specializations
+    
+    For some reason I made Query specializations for when there is multi-row
+    parameter data and non-void result data. These are of course useless.
+
+ include/asql/query.hpp |  156 ------------------------------------------------
+ 1 files changed, 0 insertions(+), 156 deletions(-)
+
+commit 01d47a3bf96f1239e598fdcd2b50e855cdd86e17
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Feb 22 09:18:31 2011 -0700
+
+    Removed useless Query specializations
+    
+    For some reason I made Query specializations for when there is multi-row
+    parameter data and non-void result data. These are of course useless.
+
+ include/asql/query.hpp |  156 ------------------------------------------------
+ 1 files changed, 0 insertions(+), 156 deletions(-)
+
+commit 29590a03fdd6656d085ca1b9551ddcd2bdf2f2a6
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Feb 22 00:35:31 2011 -0700
+
+    Corrected spelling error in data.hpp
+
+ include/asql/data.hpp |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 6d3c6e38bf5a3811e83cd1f8110f355b8dc04bf3
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Feb 22 00:35:31 2011 -0700
+
+    Corrected spelling error in data.hpp
+
+ include/asql/data.hpp |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit bf0669011cf2cf0e376371caba243ee609933217
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Feb 22 00:13:19 2011 -0700
+
+    Added proprocessor macro for ASql::Data::Set
+    
+    This macro will automatically generate the numberOfSqlElements() and
+    getSqlIndex() functions inside any user defined class.
+
+ doc/doc.hpp           |    3 ++
+ examples/database.cpp |   24 ++++------------
+ include/asql/data.hpp |   71 ++++++++++++++++++++++++++++++++++++++++++------
+ 3 files changed, 71 insertions(+), 27 deletions(-)
+
+commit dbd5171ff5df1d6128cee9ae577d7b34893f1b9d
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Feb 22 00:13:19 2011 -0700
+
+    Added proprocessor macro for ASql::Data::Set
+    
+    This macro will automatically generate the numberOfSqlElements() and
+    getSqlIndex() functions inside any user defined class.
+
+ doc/doc.hpp           |    3 ++
+ examples/database.cpp |   24 ++++------------
+ include/asql/data.hpp |   71 ++++++++++++++++++++++++++++++++++++++++++------
+ 3 files changed, 71 insertions(+), 27 deletions(-)
+
+commit 73a285524cce90011e2e3b77d22d9fc6289f435d
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Feb 21 22:52:27 2011 -0700
+
+    Made the ASql Query system much more type safe
+
+ doc/doc.hpp                |   32 +-
+ doc/doxygen                |    2 +-
+ examples/database.cpp      |   39 +-
+ include/Makefile.am        |    5 +-
+ include/asql/asql.hpp      | 1065 +-------------------------------------------
+ include/asql/data.hpp      |  648 +++++++++++++++++++++++++++
+ include/asql/exception.hpp |   24 +
+ include/asql/mysql.hpp     |    4 +-
+ include/asql/query.hpp     |  848 +++++++++++++++++++++++++++++++++++
+ src/mysql.cpp              |    2 +-
+ 10 files changed, 1572 insertions(+), 1097 deletions(-)
+
+commit 7da5fc4309e8aaf8577126455afde9e947991393
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Feb 21 22:52:27 2011 -0700
+
+    Made the ASql Query system much more type safe
+
+ doc/doc.hpp                |   32 +-
+ doc/doxygen                |    2 +-
+ examples/database.cpp      |   39 +-
+ include/Makefile.am        |    5 +-
+ include/asql/asql.hpp      | 1065 +-------------------------------------------
+ include/asql/data.hpp      |  648 +++++++++++++++++++++++++++
+ include/asql/exception.hpp |   24 +
+ include/asql/mysql.hpp     |    4 +-
+ include/asql/query.hpp     |  848 +++++++++++++++++++++++++++++++++++
+ src/mysql.cpp              |    2 +-
+ 10 files changed, 1572 insertions(+), 1097 deletions(-)
+
+commit 89b6e936a3e8051f8130bfadc295e8fb9520d930
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Feb 14 14:33:05 2011 -0700
+
+    Removed debugging functions from boostIostreams
+
+ include/fastcgi++/fcgistream.hpp |    2 +-
+ src/fcgistream.cpp               |   31 -------------------------------
+ src/request.cpp                  |   17 -----------------
+ 3 files changed, 1 insertions(+), 49 deletions(-)
+
+commit c3031676ebaca709d58919bc84f826ffb2966392
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Fri Feb 11 18:42:23 2011 -0700
+
+    Added support for boolean type to ASql
+
+ include/asql/asql.hpp |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+commit 4751f7a33c28f46630139c61f0052bda48457841
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Fri Feb 11 18:42:23 2011 -0700
+
+    Added support for boolean type to ASql
+
+ include/asql/asql.hpp |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+commit 5f60dd17c017290cb063500321e0286f4e72642d
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Fri Feb 11 15:56:59 2011 -0700
+
+    Fixed locale setting bug in Request
+
+ include/fastcgi++/request.hpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit b8dbbd50e57fff4e90b71b2f418e0e9cefcb3b80
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Wed Feb 9 19:13:03 2011 -0700
+
+    Added encoding stream manipulator and stream doc
+    
+    The new stream manipulator can set the output encoding of a stream.
+
+ doc/doc.hpp                      |  202 +++++++++++++++++++++++---------------
+ examples/authorizer.cpp          |    3 +-
+ examples/database.cpp            |    3 +-
+ examples/echo-form.html          |    8 +-
+ examples/echo.cpp                |   69 +++++++-------
+ examples/session.cpp             |    9 +-
+ include/fastcgi++/fcgistream.hpp |  167 +++++++++++++++++++++++++++++++-
+ src/fcgistream.cpp               |   16 +++
+ 8 files changed, 351 insertions(+), 126 deletions(-)
+
+commit dd8463b9cffa01b7fb153e6a38ff344fd4c550c9
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Tue Feb 8 21:54:25 2011 -0700
+
+    Added url/html encoding capabilities to fcgistream
+    
+    This functionality will encode all characters that need to be encoded.
+    The facilities still lack a stream manipulator.
+
+ include/fastcgi++/fcgistream.hpp |    4 +-
+ src/fcgistream.cpp               |  125 ++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 124 insertions(+), 5 deletions(-)
+
+commit 1e1cdbba8602663cb4ce3bd3f71bae3d21d8d32b
+Merge: d8dce8e 0b82441
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Thu Feb 3 18:24:19 2011 -0700
+
+    Merge branch 'master' into boostIostreams
+
+commit d8dce8ec4bfaf9375d4f74d2b05876ba0b7b16bd
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Thu Feb 3 18:15:32 2011 -0700
+
+    Fixed buffer size issue in fcgistream
+    
+    It turns out the buffer size issue in fcgistream was due to a casting
+    issue, std::streamsize vs int.
+
+ include/fastcgi++/fcgistream.hpp |    9 +--------
+ src/fcgistream.cpp               |    6 +++---
+ 2 files changed, 4 insertions(+), 11 deletions(-)
+
+commit 0b82441bcadc13b34ad60a3ece0da4edb12cd836
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Mon Jan 31 16:21:16 2011 -0700
+
+    Changed Environment::pathInfo into a std::vector
+    
+    The path info is now stored in an std::vector that contains a '/'
+    tokenized version of the PATH_INFO string. The components of the
+    container are de-url-encoded and code-converted if needed.
+
+ examples/echo.cpp          |   17 +++++++++++++++--
+ include/fastcgi++/http.hpp |    4 +++-
+ src/http.cpp               |   19 ++++++++++++++++++-
+ 3 files changed, 36 insertions(+), 4 deletions(-)
+
+commit 9b5ebe5a51b863d718f7fd72ee1ca7e8756122b8
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Sun Jan 30 20:57:49 2011 -0700
+
+    Changed many Request members to public
+
+ include/fastcgi++/request.hpp |   56 ++++++++++++++++++++--------------------
+ 1 files changed, 28 insertions(+), 28 deletions(-)
+
+commit 8be7cc98641ee0073bcf0e780d064e34a654f5ea
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Sat Jan 29 19:36:50 2011 -0700
+
+    Changed nullable default contructor to start null
+
+ include/asql/asql.hpp |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit c48404b5b6149dd020344727184518383fb81b51
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Jan 25 15:46:21 2011 -0700
+
+    Started switching Fcgistream to boost::iostreams
+    
+    I've started transitioning the Fcgistream class to utilize
+    boost::iostreams instead of std::iostreams. This is for the purpose of
+    having access to boost::iostreams::filtering_stream. Such will allow us
+    to do the on the fly url-encoding we all so crave.
+    
+    The switchover involves making the Fcgistream class a
+    boost::iostreams::filtering_stream that has two "filters" in it. The
+    first component will be the "Encoding" filter that will do any
+    url/html/whatever encoding that needs to be done. Next in line is the
+    boost::iostreams::device sink that takes buffered data and forms it into
+    FastCGI records sending it along it's way. When the Fcgistream has a
+    parameter type of wchar_t, the device is encapsulated into a
+    boost::iostreams::code_converter adaptor to do the utf-16/32 - utf-8
+    code conversion.
+    
+    The transition is somewhat complete save a few roadblocks I've been
+    running into with boost::iostreams::code_converter. I'm quite convinced
+    that there may be some issues in the boost code which is why I'm keeping
+    this as a separate branch for now. Here is an itemization of the issues.
+    Note all of them only occur when the device is wrapped inside a
+    boost::iostreams::code_converter. Otherwise we are 100%.
+    
+    - I cannot change the buffer size of the code_converter. There are
+      parameters in it's constructor to allow for it but the buffer always
+      seems to be 128 bytes no matter what I tell it. This is kind of a
+      disaster for our purposes.
+    - I cannot for the life of me get the code_converter to flush its
+      little buffer. I pass a strict_sync() to
+      boost::iostreams::filtering_stream and every other component gets
+      flushed save the code_converter. This issue actually makes it unusable
+      because without being able to force flush the buffers the last bit of
+      each request gets chopped off and isn't sent to the client.
+    - For some reason, when I pass a buffer size to the code_converter (not
+      that it does anything) it tries to copy construct the device not with
+      a normal copy constructor, but some weird constructor that also takes
+      a const long int& as a parameter. I've created a constructor that take
+      said parameter and ignore it, but this is only a solution for testing
+      purposes.
+
+ configure.ac.in                  |    1 +
+ include/fastcgi++/fcgistream.hpp |  133 ++++++++++++----------------------
+ include/fastcgi++/request.hpp    |    8 +-
+ src/Makefile.am                  |    1 +
+ src/fcgistream.cpp               |  118 +++++++++++++++++++++++++++++++
+ src/request.cpp                  |  144 +++-----------------------------------
+ 6 files changed, 182 insertions(+), 223 deletions(-)
+
+commit 8ead2aff03b0689b0209f0a804dc88f5a8e4d9c1
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Jan 21 12:22:42 2011 -0700
+
+    Added separate Request error handling function
+    
+    Created a new function errorHandler() within the Request class that can
+    be overridden to handle uncaught exceptions. The default behaviour is to
+    output some data into the error log and send a 500 Internal Server Error
+    message to the client.
+
+ include/fastcgi++/request.hpp |   10 ++++++++++
+ src/request.cpp               |   23 +++++++++++++++++++++--
+ 2 files changed, 31 insertions(+), 2 deletions(-)
+
+commit 9d8decf82ee0127ce729999882324c20ce65c9eb
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Jan 17 22:15:51 2011 -0700
+
+    Introduced default constructor to Http::Environment
+
+ include/fastcgi++/http.hpp |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 9dd0ea25b0c11f618bbd237477ff2e7162de2b60
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Jan 17 10:14:46 2011 -0700
+
+    Fixed bug in Http::atoi()
+    
+    This function was not reading negative values properly.
+
+ src/http.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 07b0d54d7b0dbcd6ea4a5c43e599288ac55ed597
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Jan 14 14:55:49 2011 -0700
+
+    Removed debugging function accidently left in
+
+ include/asql/asql.hpp |   23 -----------------------
+ 1 files changed, 0 insertions(+), 23 deletions(-)
+
+commit 919700ad7fce8d54e4b422ba19f4af7f6dd9c533
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Jan 14 14:01:18 2011 -0700
+
+    Fixed minor typo
+
+ include/asql/mysql.hpp |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+commit c564b639c6ae250fecc8ec1730106f0f5d6d8e2f
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Jan 14 13:52:43 2011 -0700
+
+    Improved concurrency system in ASql
+    
+    The ASql system is now fully concurrent. When building a connection
+    object the amount of threads passed to the constructor allows that
+    amount of queries to be executing simultaneously. The effectively
+    creates separate queues for each thread. Queueing up a query always
+    places it in the smaller queue. Obviously transactions are guaranteed to
+    always be placed in the same queues.
+
+ doc/doc.hpp            |    6 +-
+ examples/database.cpp  |    2 +-
+ include/asql/asql.hpp  |  160 ++++++++++++++++++++++--------------
+ include/asql/mysql.hpp |  105 ++++++++++++++----------
+ src/mysql.cpp          |  212 +++++++++++++++++++++++++++---------------------
+ 5 files changed, 284 insertions(+), 201 deletions(-)
+
+commit ad28d1098898766c601b175c0cb4fe74a7532a03
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Jan 11 18:45:06 2011 -0700
+
+    Change Request::getRole() to Request::role()
+    
+    Which also meant changing Request::role to Request::m_role.
+
+ examples/authorizer.cpp       |    2 +-
+ include/fastcgi++/request.hpp |    6 +++---
+ src/request.cpp               |    2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 59a4e9996973bbc612f9d1c544f9b9314fb54837
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Jan 11 18:18:39 2011 -0700
+
+    Made Request::environment constant
+    
+    The Request::environment data structure has been renamed to
+    Request::m_environment and made private. It can now be accessed from an
+    accessor function environment() which returns a constant reference. Due
+    to it's constantness the std::maps (gets, cookies, posts) were broken so
+    helper functions for accessing them were added.
+
+ doc/doc.hpp                   |  158 ++++++++++++++++++++--------------------
+ examples/authorizer.cpp       |    6 +-
+ examples/database.cpp         |   10 ++--
+ examples/echo.cpp             |   52 +++++++-------
+ examples/session.cpp          |    6 +-
+ examples/showgnu.cpp          |    4 +-
+ examples/timer.cpp            |    4 +-
+ examples/upload.cpp           |    2 +-
+ include/fastcgi++/http.hpp    |   14 +++-
+ include/fastcgi++/request.hpp |   40 +++++++++--
+ src/http.cpp                  |   36 +++++++++
+ src/request.cpp               |   22 +++---
+ 12 files changed, 212 insertions(+), 142 deletions(-)
+
+commit 0ed2d281a8ee0e41a4e76af68e5c52a0f63bdc48
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Jan 11 12:17:59 2011 -0700
+
+    Added ASql::Data::IndySetRefBuilder helper class
+    
+    This class is another Data::Set class builder. It is intended for single
+    member sets where the object is referenced to.
+
+ include/asql/asql.hpp |   72 +++++++++++++++++++++++++++++++++---------------
+ 1 files changed, 49 insertions(+), 23 deletions(-)
+
+commit 3b2914f9f5efbfd64e6b5210d55f428612981e69
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Jan 11 12:16:36 2011 -0700
+
+    Fixed null termination bug in database example
+
+ examples/database.cpp |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+commit ee247c93c228daf30cbdd99dda20a835ee5a75a7
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Jan 10 17:43:46 2011 -0700
+
+    Fixed bug where MySQL statements wern't inited
+
+ src/mysql.cpp |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit fb9b32de85e027f4fd18090ef962faf819165405
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Sun Jan 9 14:54:43 2011 -0700
+
+    Added ability to act as authorizer
+    
+    A simple modification allows the library to function as a FastCGI
+    authorizer as well now. A functional example has been added.
+
+ examples/Makefile.am          |    7 ++-
+ examples/authorizer.cpp       |  128 +++++++++++++++++++++++++++++++++++++++++
+ examples/echo.cpp             |    1 +
+ examples/locked/locked.png    |  Bin 0 -> 2602 bytes
+ include/fastcgi++/request.hpp |    3 +
+ src/request.cpp               |    2 +-
+ 6 files changed, 138 insertions(+), 3 deletions(-)
+
+commit a869ae990ab2bfa4bc58d235b75f2eab91b7476a
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Sat Jan 8 21:41:45 2011 -0700
+
+    Added version member to the Fastcgipp namespace
+
+ examples/echo.cpp              |    4 +++-
+ include/fastcgi++/protocol.hpp |    2 ++
+ src/manager.cpp                |    2 +-
+ src/protocol.cpp               |    2 ++
+ src/request.cpp                |    6 +++---
+ 5 files changed, 11 insertions(+), 5 deletions(-)
+
+commit 41640462fa68fec09f5a3aa389db0f295babf910
+Author: Eddie Carle <eddie@erctech.ca>
+Date:   Sat Jan 8 20:25:05 2011 -0700
+
+    Combined members in Fastcgipp::Http::Post<charT>
+    
+    The filename and value members now point to the same piece of data as
+    they will never both be used at the same time.
+
+ TODO                       |    3 ---
+ include/fastcgi++/http.hpp |   12 +++++++++++-
+ 2 files changed, 11 insertions(+), 4 deletions(-)
+
+commit a46632565d36f2b42eddad5dc28d741214caccdf
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Sat Jan 8 13:00:39 2011 -0700
+
+    Fixed SEGFAULT issue fd resource management
+    
+    The transceiver was infrequently trying to delete resources that didn't
+    actually exist. This was solved by implementing a check to insure the fd
+    resources weren't already deleted.
+
+ TODO                              |    1 -
+ include/fastcgi++/transceiver.hpp |   19 +++++++++++++++++++
+ src/transceiver.cpp               |   22 ++++++++++++++--------
+ 3 files changed, 33 insertions(+), 9 deletions(-)
+
+commit 5907aaa2da2d5077e51611f2f99b583be3d7900f
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Sat Jan 8 08:59:58 2011 -0700
+
+    Updated TODO file
+
+ TODO |   20 +++++++-------------
+ 1 files changed, 7 insertions(+), 13 deletions(-)
+
+commit 67119c06677e8d26db96f0136eedc95fb78a5735
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Jan 7 21:25:32 2011 -0700
+
+    De-templated percentEscapeToRealBytes()
+
+ include/fastcgi++/http.hpp |    2 +-
+ src/http.cpp               |    6 ++----
+ 2 files changed, 3 insertions(+), 5 deletions(-)
+
+commit ec679f14d8f9f3dfc56880adf4720d582ff0da68
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Jan 7 20:10:18 2011 -0700
+
+    Moved GET and cookie data into STL containers
+    
+    After much thought, the GET and cookie data has been moved from their
+    old plain strings to containers. This involved creating parsing
+    functions along with removing some helper functions that were designed
+    to work around the short-commings of the old method.
+
+ configure.ac.in            |    1 -
+ doc/doc.hpp                |   79 +++++++++++++++-------
+ examples/echo-form.html    |   58 +++-------------
+ examples/echo.cpp          |   22 +++++-
+ examples/session.cpp       |    9 +--
+ include/fastcgi++/http.hpp |  158 ++++----------------------------------------
+ src/http.cpp               |   77 ++++++++++-----------
+ src/request.cpp            |    2 +-
+ 8 files changed, 134 insertions(+), 272 deletions(-)
+
+commit 84748378064c3c852843aef16a291ee955369016
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Jan 7 18:13:40 2011 -0700
+
+    Solved url-encoded POST parsing issues
+    
+    url-encoded POST data now properly handles "percent-escaped" bytes,
+    utf-8 characters, and other weird characters. This involved a fairly
+    large modification.
+
+ examples/echo.cpp          |   30 ++------------
+ include/fastcgi++/http.hpp |   43 ++++----------------
+ src/http.cpp               |   95 +++++++++++++++++---------------------------
+ 3 files changed, 50 insertions(+), 118 deletions(-)
+
+commit 020ff6958ca86a854870098b9f9f9736bfda238d
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Jan 7 16:19:48 2011 -0700
+
+    Multipart form data now stores file content-type
+    
+    * Removed the function parseXmlValue() and internalized it into
+      fillPostsMultipart() with some improvements.
+    * The Post data type now contains a separate member for filename.
+      Ideally this will be unioned or referenced to the value member as they
+      will never both be used at the same time.
+    * The Post data type now contains a contentType member which is filled
+      when the multipart segment is not form data.
+    * The echo example has been update accordingly.
+
+ doc/doc.hpp                |    5 +-
+ examples/echo.cpp          |    5 +-
+ include/fastcgi++/http.hpp |   20 ++-----
+ src/http.cpp               |  128 +++++++++++++++++++++++++++++++-------------
+ 4 files changed, 101 insertions(+), 57 deletions(-)
+
+commit 5d77e26b03b91d2798f1e142b91efa74233c03be
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Jan 7 12:26:50 2011 -0700
+
+    Cleaned up POST handling code
+    
+    * The processPostData() function was removed in favour of integrating the
+      code directly into the Request::handler() function.
+    * An exception was created to handle the reception of unknown content
+      types and is thrown by Request::handler() when said situation occurs.
+    * fillPosts() has been renamed to fillPostsMultipart() to better reflect
+      what it is actually doing.
+
+ include/fastcgi++/http.hpp    |    2 +-
+ include/fastcgi++/request.hpp |   43 +++++++---------------------------------
+ src/http.cpp                  |    6 ++--
+ src/request.cpp               |   24 ++++++++++++++++------
+ 4 files changed, 29 insertions(+), 46 deletions(-)
+
+commit d621fe9fc6812ce514af08cc7eb0c2662871e27e
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Jan 7 11:30:48 2011 -0700
+
+    Tuned percentEscapedToRealBytes() function
+    
+    The percentEscapedToRealBytes() function in the Http namespace did not
+    properly convert '+' characters into spaces as the standard dictates. I
+    also changed the return type to size_t and eliminated a duplicate line
+    of code.
+
+ include/fastcgi++/http.hpp |    2 +-
+ src/http.cpp               |   19 +++++++++++--------
+ 2 files changed, 12 insertions(+), 9 deletions(-)
+
+commit 707ecfc38ebccc631fcc619507db35101a8d1d3b
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Nov 2 11:51:04 2010 -0600
+
+    base64Decode no longer depends on rac iterators
+    
+    Some shifting code around has removed the dependence that
+    Http::base64Decode() had on random access iterators for it's output.
+
+ include/fastcgi++/http.hpp |   13 +++++++++----
+ 1 files changed, 9 insertions(+), 4 deletions(-)
+
+commit b4ffcb493eb993864ad84d07d0d82985f4af28b7
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Oct 29 17:28:14 2010 -0600
+
+    Fixed security issue with Http::Sessions<T>
+    
+    The generate() function was not checking for uniqueness of the session
+    id before adding it to the container. The check now happens.
+
+ include/fastcgi++/http.hpp |   11 ++++++++++-
+ 1 files changed, 10 insertions(+), 1 deletions(-)
+
+commit dd4257b458aae1e971d0f0204df55fb3a91ff134
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Oct 29 16:57:59 2010 -0600
+
+    Added endianess check for other *NIXs
+    
+    This entailed adding a check and include of arpa/nameser_compat.h in the
+    appropriate files. Thanks to Olexiy Buyanskyy for the suggestion.
+
+ configure.ac.in                |    5 +++++
+ include/fastcgi++/protocol.hpp |    4 +++-
+ 2 files changed, 8 insertions(+), 1 deletions(-)
+
+commit d3b1c181839a11e86dff073ae7b7597be157b67d
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Oct 29 16:36:38 2010 -0600
+
+    Fixed padding bug in Http::base64Decode()
+    
+    Fastcgipp::Http::base64Decode() was not properly handling the padding at
+    the end of base64 encoding strings. Extra null characters were being
+    added when they shouldn't have been.
+    
+    Along with this fix comes a change to the function. It now returns an
+    iterator to the last characters written +1. The way it should have
+    worked from the beginning.
+    
+    Thanks to Henrique Aparicio for finding this little nugget.
+
+ include/fastcgi++/http.hpp |   16 +++++++++-------
+ src/http.cpp               |    4 ++--
+ 2 files changed, 11 insertions(+), 9 deletions(-)
+
+commit d600596f8faaf6a8cf7ce204ed6d943a430b4f90
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Sat May 29 09:27:19 2010 -0600
+
+    Updated config/boost.m4 to latest version
+
+ config/boost.m4 |  351 ++++++++++++++++++++++++++++++++++++++-----------------
+ 1 files changed, 246 insertions(+), 105 deletions(-)
+
+commit 3dab986e2cf76b832db142355957348bcb894a9f
+Merge: 42f4c5d 3fc6fc4
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Sat May 15 11:35:52 2010 -0600
+
+    Merge remote branch 'origin/get-post-data-support'
+
+commit 3fc6fc4b93edfa4492875954ec43359f011b2383
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Wed May 12 12:54:50 2010 -0600
+
+    Minor fixes to echo example.
+
+ examples/echo.cpp |   18 ++++++++++--------
+ 1 files changed, 10 insertions(+), 8 deletions(-)
+
+commit e8815a6f6e565004da6a950178e4c828f9336001
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Wed May 12 11:32:02 2010 -0600
+
+    Merged non-conflicting changes from master.
+
+ configure.ac.in      |    3 ++-
+ examples/Makefile.am |    2 +-
+ src/mysql.cpp        |   10 ++++++++++
+ 3 files changed, 13 insertions(+), 2 deletions(-)
+
+commit cbddcc977349ad70b0b1bd4d91c147a0f42b72d7
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Wed Mar 17 14:32:43 2010 -0600
+
+    More urlencoded data parsing changes.
+    
+    - Changed fillPostsUrlEncoded to call percentEscapedToRealBytes before
+      calling doFillPostsUrlEncoded. This has the side effect that stray =
+      and & characters in POST request data won't be handled as nicely as
+      before (see http://lists.gnu.org/archive/html/fastcgipp-users/2010-03/msg00000.html).
+    - Added convenience method for parsing queryString as urlencoded data.
+    - Updated echo example to reflect above.
+
+ examples/echo.cpp          |    4 +---
+ include/fastcgi++/http.hpp |   10 ++++++++++
+ src/http.cpp               |   38 ++++++++++++++++++++------------------
+ 3 files changed, 31 insertions(+), 21 deletions(-)
+
+commit 6e3ede61c9ba1d0e25d7f112b4364f871aee38ea
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Tue Mar 16 14:32:04 2010 -0600
+
+    Some minor fixes to url-encoded request parsing.
+    
+    - doFillPostsUrlEncoded is now NOT automatically called. The client must
+      call it explicitly
+    - Minor Fixes to echo example.
+    - Changed doFillPostsUrlEncoded to continue processing subsequent
+      key/value pairs when a bad one is found (instead of bailing as before)
+
+ examples/echo.cpp |   24 +++++++++++++-----------
+ src/http.cpp      |   15 +++++++--------
+ src/request.cpp   |    1 -
+ 3 files changed, 20 insertions(+), 20 deletions(-)
+
+commit 42f4c5d8246bec2a54dad56393477d67886c7126
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Feb 1 06:38:49 2010 -0700
+
+    mysql.cpp now instances ConnectionPar properly
+
+ src/mysql.cpp |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
+
+commit 36ba614b4f63eee67337b6e77c2799d9459cfbfa
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Feb 1 06:37:04 2010 -0700
+
+    Fixed boost compile time library flags
+    
+    Changed the make process to use the -l link flags generated by the boost
+    configure checker instead of assuming the names
+
+ configure.ac.in      |    3 ++-
+ examples/Makefile.am |    2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 2ca2bc8c74aca64079449090f67b6665a40ec8f3
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Mon Jan 25 14:05:37 2010 -0700
+
+    Removed unnecessary line.
+
+ src/http.cpp |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+commit cff8ac83371fbb402510ba379cdcf1015c936009
+Merge: de744fa d0c390f
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Mon Jan 25 12:03:54 2010 -0700
+
+    Merge branch 'master' into get-post-data-support
+
+commit de744fab6e29f15c74bcebe90bb4ce43d3f331fd
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Mon Jan 25 11:52:37 2010 -0700
+
+    Added fix for bug https://savannah.nongnu.org/bugs/?28546
+    
+    Notes:
+    Currently trims white space at beginning and end of string. Might not
+    actually want this...
+
+ src/http.cpp |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
+
+commit d0c390facb90d486197c8aff185de15fe4b1c733
+Merge: 4bf6e8e 2071bf9
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Sat Jan 23 19:12:46 2010 -0700
+
+    Merge remote branch 'origin/get-post-data-support'
+    
+    All conflicts took the 'origin/get-post-data-support'
+    version.
+    
+    Conflicts:
+    	examples/echo.cpp
+    	include/fastcgi++/http.hpp
+    	src/http.cpp
+
+commit 4bf6e8e560de50c27497e208078e43dd9eb2e18a
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Sat Jan 23 18:12:46 2010 -0700
+
+    Polished up the ASql facilities
+    
+    This included finally adding usable documentation, updating the database
+    example/tutorial and adding transaction support.
+
+ doc/doc.hpp            |  136 ++++++---
+ examples/database.cpp  |   41 ++-
+ include/asql/asql.hpp  |  736 ++++++++++++++++++++++++++++++++++++------------
+ include/asql/mysql.hpp |   31 ++-
+ src/mysql.cpp          |   27 ++-
+ 5 files changed, 730 insertions(+), 241 deletions(-)
+
+commit 2071bf9bc522a8256aa9bd1ce68411409b60390b
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Fri Jan 22 16:35:05 2010 -0700
+
+    Request parameter parsing related fixes.
+    
+    - Added handling of buffer of length 0 in percentEscapedToRealBytes
+    - Added handling of spaces encoded as + instead of %20 in requests.
+
+ src/http.cpp |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+commit 79d55a2efb8a3fca7687fa884a9d082fedeebde9
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Wed Jan 20 17:24:28 2010 -0700
+
+    Fixed bug in doFillPostsUrlEncoded.
+    
+    An array was incorrectly sized in doFillPostsUrlEncoded. Caused
+    intermittent bug. Should be fixed now.
+
+ src/http.cpp |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+commit 293a870fa43155859b1691071fc239b33ab33618
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Tue Jan 12 15:10:00 2010 -0700
+
+    Added requestUri member to Http for REQUEST_URI env var.
+
+ include/fastcgi++/http.hpp |    2 ++
+ src/http.cpp               |    2 ++
+ 2 files changed, 4 insertions(+), 0 deletions(-)
+
+commit 9d96028c342cfa5bdcadaa9d6e16cfc1b57ee55c
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Wed Jan 6 16:11:24 2010 -0700
+
+    Added support to requestGetVar for retrieving Post::Type::file data.
+    
+    Added specialisation to requestGetVar fora second parameter of type
+    boost::shared_array<char>. Also makes sure the Post variable associated
+    with the passed key is of type Post::typoe::file.
+
+ include/fastcgi++/http.hpp |   85 ++++++++++++++++++++++++++++++++------------
+ src/http.cpp               |    2 +-
+ 2 files changed, 63 insertions(+), 24 deletions(-)
+
+commit cebd301b8cc7724c8f229a32062588d8edcc033c
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Fri Nov 6 13:07:37 2009 -0700
+
+    Added check for boost/algorithm/string to build system.
+    
+    - No conditional compilation added. Just a check for the header files.
+
+ config/boost.m4 |    8 ++++++++
+ configure.ac.in |    1 +
+ 2 files changed, 9 insertions(+), 0 deletions(-)
+
+commit 82d13c3fe2cd818a07a16d54f68914f2e640a453
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Wed Nov 4 16:20:50 2009 -0700
+
+    Added POST url-encoded request parameter treatment to GET/PUT.
+    
+    - Added automatic parsing of GET/PUT queryString into Environment::Posts
+      structure (doesn't work for DELETE though?).
+    - Added querying and retrieving GET/PUT request vars by name (as with POST
+      data).
+
+ examples/echo.cpp          |    6 +++---
+ include/fastcgi++/http.hpp |   29 ++++++++++++++++++++++-------
+ src/http.cpp               |   26 +++++++++++++++++---------
+ src/request.cpp            |    1 +
+ 4 files changed, 43 insertions(+), 19 deletions(-)
+
+commit e330c1f6668ef313af5f924afa2076ac0f0dbba7
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Fri Oct 16 14:20:24 2009 -0600
+
+    Revert "x-www-form-urlencoded parsing and variable retrieval improvements."
+    
+    This reverts commit f0f9da11ffcf6052d61d7ab119652c2b3c1ba4d3.
+    
+    I had the wrong branch checked out when working on this patch.
+
+ examples/echo-form.html    |   13 +++------
+ examples/echo.cpp          |   22 ++++------------
+ include/fastcgi++/http.hpp |   59 ++-----------------------------------------
+ src/http.cpp               |   39 +++++++++++++++++++++++-----
+ 4 files changed, 46 insertions(+), 87 deletions(-)
+
+commit f0f9da11ffcf6052d61d7ab119652c2b3c1ba4d3
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Fri Oct 16 14:00:00 2009 -0600
+
+    x-www-form-urlencoded parsing and variable retrieval improvements.
+    
+    - Fixed bug in fillPostsUrlEncoded that caused segfault on some
+      combinations of input.
+    - Added automatic retrieval of sequential/array-type request data.
+      Implemented postVariableRetrieve with std::vector as output/value
+      parameter. See echo example for usage.
+
+ examples/echo-form.html    |   13 ++++++---
+ examples/echo.cpp          |   22 ++++++++++++----
+ include/fastcgi++/http.hpp |   59 +++++++++++++++++++++++++++++++++++++++++--
+ src/http.cpp               |   39 +++++-----------------------
+ 4 files changed, 87 insertions(+), 46 deletions(-)
+
+commit c078e92f92adbaa2546ae2867c11cd2ebfe5dc73
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Thu May 21 11:25:08 2009 -0600
+
+    Switched into beta
+
+ AUTHORS   |    2 ++
+ THANKS    |    1 -
+ bootstrap |    2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
+
+commit a6c9006b144b320bb4fd620206b5927180a30113
+Merge: d751aa8 8f9e457
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Thu May 21 11:18:29 2009 -0600
+
+    Merge commit 'origin/get-post-data-support'
+
+commit d751aa80e13fb80b4f2c76cc17ba11c7fb9a822d
+Merge: 97b868d 3377540
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Thu May 21 11:07:23 2009 -0600
+
+    Merge commit 'origin/content-url-encoded'
+
+commit 97b868df51c72585dd01c1bee932220d424143e6
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Thu May 21 10:49:43 2009 -0600
+
+    Further polished ASql::Query
+    
+    Also updated documentation and tutorial for ASql stuff.
+
+ doc/doc.hpp           |  115 ++++++++++--------
+ examples/database.cpp |    4 +-
+ include/asql/asql.hpp |  335 ++++++++++++++++++++++++++++++++++++++++++-------
+ src/mysql.cpp         |    5 +-
+ 4 files changed, 358 insertions(+), 101 deletions(-)
+
+commit 8f9e457c1e7afea082f8de3f377883a27d573b58
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Mon May 18 12:03:21 2009 -0600
+
+    Add support for querying and fetching of post variables.
+    
+    Added postVariableExists to test for the existence of a post variable
+    and postVariableRetrieve to retrieve the value associated with variable
+    key and cast it to the type desired by the user. More details included
+    in the doxygen documentation.
+    
+    One caveat: I could not specialize postVariableRetrieve char and wchar_t
+    as C++ does not allow partial specialization of function templates. I
+    had originally overloaded it for each type, but saw little advantage to
+    doing that instead of just leaving it without specialization. That
+    option exists though if it's decided later that it's a better approach.
+    
+    Also, feel free to rename both functions.
+
+ examples/echo.cpp          |   14 +++++++++++++-
+ include/fastcgi++/http.hpp |   41 +++++++++++++++++++++++++++++++++++++++++
+ src/http.cpp               |   13 +++++++++++++
+ 3 files changed, 67 insertions(+), 1 deletions(-)
+
+commit 3377540466b26c8f933e8afe1eb0d0af927e839d
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Thu May 14 14:07:45 2009 -0600
+
+    Finished (more or less) this patch.
+    
+    Unfortunately, there is no unique character to identify the end of
+    application/x-www-form-urlencoded data in a POST request. As a result,
+    if the last record in a POST request is not as expected (i.e.
+    key=value), there is no way to detect if it is incomplete or malformed.
+    
+    Aside from missing that particular case, it works.
+
+ src/http.cpp |    3 ---
+ 1 files changed, 0 insertions(+), 3 deletions(-)
+
+commit ade6682a7e0032dcb3a01f9d8d8d48ddd4da66c2
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Thu May 14 13:55:59 2009 -0600
+
+    Fixed error that truncated last character of request data.
+
+ src/http.cpp |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
+
+commit 7a1ed65c89fff31ab9cc8214b51c864abc881229
+Merge: c9a137f 7df2420
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Thu May 14 12:53:02 2009 -0600
+
+    Merge branch 'master' into content-url-encoded
+
+commit 9445d4864b6740787d07f21b922058883a67ec64
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Sat Apr 18 00:16:08 2009 -0600
+
+    Fixed more ASql stuff
+
+ examples/database.cpp  |   22 ++--
+ include/asql/asql.hpp  |  242 +++++++++++++++++++++++-------------------------
+ include/asql/mysql.hpp |    8 +-
+ src/Makefile.am        |    4 -
+ src/asql.cpp           |   31 ------
+ src/mysql.cpp          |   11 +--
+ 6 files changed, 134 insertions(+), 184 deletions(-)
+
+commit 7df2420365c7f4881be6d7ba331d499efaa4aeff
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Apr 17 17:35:50 2009 -0600
+
+    ASql now supports multi-execution of statements.
+
+ examples/database.cpp  |   18 ++--
+ include/asql/asql.hpp  |  216 +++++++++++++++++++++++++++++++++--------------
+ include/asql/mysql.hpp |    4 +-
+ src/asql.cpp           |   25 ++++--
+ src/mysql.cpp          |   17 ++++
+ 5 files changed, 196 insertions(+), 84 deletions(-)
+
+commit d5554d85f34d93e8a1824a21009102db58c04ed0
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Apr 17 10:02:44 2009 -0600
+
+    Added SQL::Data::SharedSetContainer
+    
+    This container will allow for boost::shared_ptr to be used in
+    SetContainers.
+
+ include/asql/asql.hpp |   18 ++++++++++++++++++
+ 1 files changed, 18 insertions(+), 0 deletions(-)
+
+commit c9a137fb51a0f9a9a8dd79f8501d31427a7304d2
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Fri Apr 17 09:38:22 2009 -0600
+
+    Updated Comment (and testing remote branch tracking).
+
+ src/http.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 4f9abf6aac0ec756e20d31be3b64c55cc9a3d083
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Fri Apr 17 09:06:29 2009 -0600
+
+    Removed some surplus spaces.
+
+ examples/echo-form.html |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 695e1f319148d5ec50a7a7a9db3df13a776bbb5f
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Apr 17 01:58:04 2009 -0600
+
+    Added busy system to Query objects
+    
+    When a query is queued, a call to busy() on the query object will return
+    true.
+
+ include/asql/asql.hpp |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit d2173ae5357823469945b91ffa221d25276c18f6
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Apr 17 01:47:18 2009 -0600
+
+    Completely change ASql queue functionality
+    
+    As opposed to passing a series of boost::shared_ptrs to a queue function
+    for asynchronous queries, the data has been assembled into a structure
+    that transparently manages data lifespans. It also provides a means of
+    canceling a query should the user be tired of waiting. A cancel can also
+    happen automatically should the query object go out of scope in the
+    calling thread.
+
+ examples/database.cpp          |   33 ++++++----
+ include/Makefile.am            |    2 +-
+ include/asql/asql.hpp          |  140 +++++++++++++++++++++++++++++----------
+ include/asql/mysql.hpp         |   18 +++---
+ include/fastcgi++/asqlbind.hpp |   42 ------------
+ include/fastcgi++/message.hpp  |    2 +
+ src/Makefile.am                |    2 +-
+ src/asql.cpp                   |   24 +++++++
+ src/asqlbind.cpp               |   12 ----
+ src/mysql.cpp                  |   12 +++-
+ 10 files changed, 171 insertions(+), 116 deletions(-)
+
+commit 1619abe735fd4f8f28795e8d657b909e0a7c1416
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Thu Apr 16 12:27:34 2009 -0600
+
+    Added ability for ASql object to re-init
+    
+    This change also prevents segfaults from happening when un-initialized
+    ASql objects (statements/connections) are destroyed.
+
+ TODO                   |    1 +
+ include/asql/mysql.hpp |   16 +++++++++++-----
+ src/mysql.cpp          |   19 +++++++++++++++++--
+ 3 files changed, 29 insertions(+), 7 deletions(-)
+
+commit 082782bfa666bf0619b6b592d480f6a20c52df59
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Thu Apr 16 11:05:17 2009 -0600
+
+    Added branch for development of "application/x-www-form-urlencoded" content type.
+    Also modified echo-form.html example to test this feature.
+
+ examples/echo-form.html       |   50 ++++++++++++++++++++++++-
+ include/fastcgi++/http.hpp    |   17 ++++++++-
+ include/fastcgi++/request.hpp |   26 +++++++++++++-
+ src/http.cpp                  |   81 ++++++++++++++++++++++++++++++++++++++++-
+ 4 files changed, 167 insertions(+), 7 deletions(-)
+
+commit f297b922b4a64d103370ccdfb4108187f8d05a1b
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Apr 13 13:12:54 2009 -0600
+
+    Fixed a couple more -Wall warnings in ASql
+
+ include/asql/mysql.hpp |    3 +--
+ src/mysql.cpp          |   13 +++++++------
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+
+commit 7a943f91d63a8b44f8de53758b544246369ad691
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Apr 13 12:53:29 2009 -0600
+
+    Cleaned up -Wall warning messages
+    
+    The warnings involved comparing unsigned and signed integers,
+    constructor initializer list order, addresses of temporaries and switch
+    statements lacking default cases.
+
+ doc/doc.hpp                       |   14 ++++++++++----
+ examples/database.cpp             |    6 ++++--
+ examples/timer.cpp                |    1 +
+ include/asql/asql.hpp             |    8 ++++----
+ include/asql/mysql.hpp            |    6 +++---
+ include/fastcgi++/exceptions.hpp  |    2 +-
+ include/fastcgi++/fcgistream.hpp  |    2 +-
+ include/fastcgi++/http.hpp        |    2 +-
+ include/fastcgi++/protocol.hpp    |    2 +-
+ include/fastcgi++/transceiver.hpp |    4 ++--
+ src/http.cpp                      |    4 ++--
+ src/manager.cpp                   |    2 +-
+ src/mysql.cpp                     |    7 +++++++
+ src/protocol.cpp                  |    2 +-
+ src/transceiver.cpp               |    6 +++---
+ 15 files changed, 42 insertions(+), 26 deletions(-)
+
+commit eadac05437ec696d688fbe618481f0bbbbdeba90
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Sun Apr 12 13:45:31 2009 -0600
+
+    Added const to response() exception handler
+    
+    The std::exception catch in Request::handler() was not catching const
+    exceptions.
+
+ src/request.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 45c9ae60f4066b75405c1f6f5be5e97e3c9edeb7
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Sun Mar 29 11:14:47 2009 -0600
+
+    Parameter data passed in ASql now const
+    
+    The parameter data passed to SQL::Statement::execute and queue is now
+    constant in the argument list.
+
+ include/asql/asql.hpp  |    6 +++---
+ include/asql/mysql.hpp |    8 ++++----
+ src/mysql.cpp          |    8 ++++----
+ 3 files changed, 11 insertions(+), 11 deletions(-)
+
+commit 81f89e4ec2883e770e07ee36879518b99aeda0c3
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Mar 23 12:18:18 2009 -0600
+
+    Made ASql::Data::Index binary constructor explicit
+    
+    The templated constructor for ASql::Data::Index that is for read/write
+    of raw binary data structures has been made explicit. This is to prevent
+    accidently using this constructor when intending to use one of the
+    others.
+
+ doc/doc.hpp           |    4 ++--
+ examples/database.cpp |    2 +-
+ include/asql/asql.hpp |   17 +++++++++++++----
+ 3 files changed, 16 insertions(+), 7 deletions(-)
+
+commit 54e708c920dc663e1e47a541f8988eb599f59ae1
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Mar 23 11:57:33 2009 -0600
+
+    Removed unnecessary virtual functions from ASql
+    
+    ASql::Connection and ASql::Statement had some virtual functions defined
+    that are overridden in the engine definitions. Since they won't be used
+    polymorphically they only serve to add a useless vtable onto the
+    objects.
+
+ include/asql/asql.hpp |   71 -------------------------------------------------
+ 1 files changed, 0 insertions(+), 71 deletions(-)
+
+commit 94c482d1d896e01482897f029f405b01f3fb5544
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Tue Mar 17 19:24:27 2009 -0600
+
+    Changed response error handling
+    
+    Request now outputs more details error messages to the error log upon
+    catching an exception and then outputs an appropriate HTTP error header
+    to the client. This is kind of broken because it looks like the web
+    server doesn't actually pass along it's canned response associated with
+    the error header, just the header itself.
+    
+    Also implemented an exception to be thrown inside the response for
+    FastCGI records received out of order.
+
+ include/fastcgi++/request.hpp |   12 ++++++++++++
+ src/request.cpp               |    8 ++++----
+ 2 files changed, 16 insertions(+), 4 deletions(-)
+
+commit 3f6d4557ddaa49acc9eab562dd700cec9aa370a5
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Mar 16 20:00:45 2009 -0600
+
+    Cleaned up Http::Address
+    
+    Polished up Http::Address a little bit by moving the overloaded operators
+    into the class instead of being friends.
+
+ include/fastcgi++/http.hpp    |   50 +++++-----------------------------------
+ include/fastcgi++/manager.hpp |    3 +-
+ 2 files changed, 9 insertions(+), 44 deletions(-)
+
+commit aa6dffb028099c01159be8cf2b1a2eb87edc606c
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Mar 16 19:29:38 2009 -0600
+
+    Knocked a few clock cycles out of fill()
+    
+    Used a switch statement on data lengths in Http::Environment::fill()
+    instead of ANDing a test for equality with the memory comparison to
+    improve efficiency.
+
+ TODO                       |    1 -
+ include/fastcgi++/http.hpp |    3 -
+ src/http.cpp               |  193 ++++++++++++++++++++++++--------------------
+ 3 files changed, 104 insertions(+), 93 deletions(-)
+
+commit 6198643a14849168e879abe2c3c3453999113c72
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Mar 16 18:53:30 2009 -0600
+
+    Fixed REQUEST_METHOD bug that broke echo.cpp
+    
+    The initialization of Http::Environment::requestMethod was done using
+    non-templated string types which broke the echo example as you cannot
+    output std::string into a wide character stream. This was corrected be
+    removing dependencies on a separate object to hold the string data all
+    together and creating a stream inserter for the Http::RequestMethod
+    enumeration.
+
+ doc/doc.hpp                |    4 ++++
+ examples/Makefile.am       |    2 +-
+ examples/echo.cpp          |    2 +-
+ include/fastcgi++/http.hpp |    3 ++-
+ src/http.cpp               |   44 +++++++++++++++++++++++++++++++++-----------
+ 5 files changed, 41 insertions(+), 14 deletions(-)
+
+commit 3b058d62755602a46993d8a5820f316eca3d6887
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Mar 16 18:17:34 2009 -0600
+
+    Added make target to build examples
+    
+    Added a manual make target into examples/Makefile.am to build them. One
+    now only has to run make examples from the examples directory.
+
+ TODO                 |   27 +++++++++++++--------------
+ doc/doc.hpp          |    5 +++++
+ examples/Makefile.am |   26 ++++++++++++++++++++++++++
+ 3 files changed, 44 insertions(+), 14 deletions(-)
+
+commit 398ac22f4b5402e5e628feb3241d0b8c4913cf01
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Mon Mar 16 16:24:58 2009 -0600
+
+    Update TODO file
+
+ TODO |   28 +++++++++++++++++-----------
+ 1 files changed, 17 insertions(+), 11 deletions(-)
+
+commit 03e560a770dad0150228e5f7d01bcc728824ab91
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Fri Mar 6 00:54:03 2009 -0700
+
+    Reimplemented ASql::Data::SetContainer again
+    
+    This time I made SetContainer take an actual container type as a
+    template parameter. This way the user can use whatever container type
+    they want so long as has a few needed member functions. The class
+    derives from the type passed to it so it should behave almost exactly
+    like the container form the users point of view.
+
+ doc/doc.hpp           |   16 +++++++++-------
+ examples/database.cpp |    9 ++++++---
+ include/asql/asql.hpp |   13 ++++++++-----
+ 3 files changed, 23 insertions(+), 15 deletions(-)
+
+commit a98a4a600200dcb2113501319a239b295726a6a3
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Wed Mar 4 20:12:51 2009 -0700
+
+    Modified SetContainer to use std::vector
+    
+    ASql::Data::SetContainer now uses std::vector as it's base storage mean.
+    The implementation has been greatly simplified and the container no
+    longer stores pointers to dynamically allocated object but the objects
+    themselves.
+
+ TODO                  |    1 -
+ doc/doc.hpp           |    2 +-
+ include/asql/asql.hpp |   79 ++++--------------------------------------------
+ src/mysql.cpp         |   11 +++----
+ 4 files changed, 13 insertions(+), 80 deletions(-)
+
+commit d8480a71fd6c48463025e6252d8627f64714f938
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Wed Mar 4 11:46:47 2009 -0700
+
+    Fixed formatting issue from last commit
+
+ doc/doc.hpp                       |    2 +-
+ examples/echo.cpp                 |    2 +-
+ examples/session.cpp              |    2 +-
+ examples/showgnu.cpp              |    2 +-
+ examples/timer.cpp                |    2 +-
+ examples/upload.cpp               |    2 +-
+ examples/utf8-helloworld.cpp      |    2 +-
+ include/asql/asql.hpp             |    2 +-
+ include/asql/mysql.hpp            |    2 +-
+ include/fastcgi++/asqlbind.hpp    |    2 +-
+ include/fastcgi++/exceptions.hpp  |    2 +-
+ include/fastcgi++/fcgistream.hpp  |    2 +-
+ include/fastcgi++/http.hpp        |    2 +-
+ include/fastcgi++/manager.hpp     |    2 +-
+ include/fastcgi++/message.hpp     |    2 +-
+ include/fastcgi++/protocol.hpp    |    2 +-
+ include/fastcgi++/request.hpp     |    2 +-
+ include/fastcgi++/transceiver.hpp |    2 +-
+ src/http.cpp                      |    2 +-
+ src/mysql.cpp                     |    2 +-
+ src/protocol.cpp                  |    2 +-
+ src/request.cpp                   |    2 +-
+ src/transceiver.cpp               |    2 +-
+ 23 files changed, 23 insertions(+), 23 deletions(-)
+
+commit 6086d3b18e5a4c4a0e45d2fd998807c36aeff051
+Author: Eddie Carle <eddie@erctech.org>
+Date:   Wed Mar 4 11:27:08 2009 -0700
+
+    Changed e-mail addresses
+
+ configure.ac.in                   |    2 +-
+ doc/doc.hpp                       |    2 +-
+ examples/echo.cpp                 |    2 +-
+ examples/session.cpp              |    2 +-
+ examples/showgnu.cpp              |    2 +-
+ examples/timer.cpp                |    2 +-
+ examples/upload.cpp               |    2 +-
+ examples/utf8-helloworld.cpp      |    2 +-
+ include/asql/asql.hpp             |    2 +-
+ include/asql/mysql.hpp            |    2 +-
+ include/fastcgi++/asqlbind.hpp    |    2 +-
+ include/fastcgi++/exceptions.hpp  |    2 +-
+ include/fastcgi++/fcgistream.hpp  |    2 +-
+ include/fastcgi++/http.hpp        |    2 +-
+ include/fastcgi++/manager.hpp     |    2 +-
+ include/fastcgi++/message.hpp     |    2 +-
+ include/fastcgi++/protocol.hpp    |    2 +-
+ include/fastcgi++/request.hpp     |    2 +-
+ include/fastcgi++/transceiver.hpp |    2 +-
+ src/http.cpp                      |    2 +-
+ src/mysql.cpp                     |    2 +-
+ src/protocol.cpp                  |    2 +-
+ src/request.cpp                   |    2 +-
+ src/transceiver.cpp               |    2 +-
+ 24 files changed, 24 insertions(+), 24 deletions(-)
+
+commit 4cc9ae19b73b6860264a6d48831cb383739db972
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Tue Mar 3 20:38:07 2009 -0700
+
+    Cleaned up some code
+    
+    Made all template declarations occupy the same line as the actual
+    declarations. Also standardized on template<class X> as opposed to
+    template<typename X>. Updated the TODO file.
+
+ TODO                           |    2 +-
+ include/asql/mysql.hpp         |    2 +-
+ include/fastcgi++/http.hpp     |    9 +++------
+ include/fastcgi++/manager.hpp  |    9 +++------
+ include/fastcgi++/protocol.hpp |    3 +--
+ include/fastcgi++/request.hpp  |    2 +-
+ src/mysql.cpp                  |    4 ++--
+ 7 files changed, 12 insertions(+), 19 deletions(-)
+
+commit 3dd5af41ed57ed35cd51b98638965873a8a3f16a
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Feb 27 15:46:12 2009 -0700
+
+    Fixed typo bug in request.hpp
+    
+    Fixed a variable name type in the processPostData() function. Also
+    updated TODO file.
+
+ TODO                          |    2 ++
+ include/fastcgi++/request.hpp |    4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit b32dbe483bf736c207f776a139074f22e5958984
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Feb 27 15:38:07 2009 -0700
+
+    Added pkg-config support
+    
+    The configure/make process now builds a pkg-config file called
+    fastcgi++.pc and installs it upon make install. All documentation
+    adjusted accordingly.
+
+ Makefile.am     |    3 +++
+ configure.ac.in |   15 +++++++++++++--
+ doc/doc.hpp     |   16 ++++++++++------
+ fastcgi++.pc.in |   12 ++++++++++++
+ 4 files changed, 38 insertions(+), 8 deletions(-)
+
+commit 0453e7e55058c76b3e5f4dae4447628292b07d8a
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Feb 27 12:01:46 2009 -0700
+
+    Fixed documentation typo in asql/mysql.hpp
+
+ include/asql/mysql.hpp |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit c9b08e72b44b698a9a6a0c787c497881d2277e40
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Feb 27 11:55:17 2009 -0700
+
+    Updated TODO list
+
+ TODO |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+commit 498ae3546e27c99f04b60d75dfb62e3bf26e1626
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Feb 27 11:34:11 2009 -0700
+
+    Added ability to handle custom POST data
+    
+    In order to accomplish this a virtual function was added to
+    Fastcgipp::Request that can be overridden to parse/process POST data in
+    whatever method is fit.
+
+ include/fastcgi++/request.hpp |   12 ++++++++++++
+ src/request.cpp               |    2 +-
+ 2 files changed, 13 insertions(+), 1 deletions(-)
+
+commit b4db599ce76f5c921c56d32bcd2e4a0fe1e1e12f
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Thu Feb 26 11:16:25 2009 -0700
+
+    Updated TODO file
+
+ TODO |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+commit 066221dfa28765c5d9fdc0600ee73c346aa2b826
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Thu Feb 26 11:09:14 2009 -0700
+
+    Updated THANKS file
+
+ THANKS |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 9f3ce55e9efa1c54d2dbd64356aa23e69c38fa46
+Author: Axel von Bertoldi <bertoldia@gmail.com>
+Date:   Thu Feb 26 11:04:53 2009 -0700
+
+    Added PATH_INTO and REQUEST_METHOD to Environment
+    
+    A pathInfo and requestMethod data member were added to the
+    Http::Environment class. requestMethod was implemented as an enumeration
+    defined as RequestMethod.
+    
+    Signed-off-by: Eddie Carle <eddie@mailforce.net>
+
+ examples/echo.cpp          |    2 ++
+ include/fastcgi++/http.hpp |   19 +++++++++++++++++++
+ src/http.cpp               |   20 ++++++++++++++++++--
+ 3 files changed, 39 insertions(+), 2 deletions(-)
+
+commit b6d1e3ca2f8e5eee0c2856d08037fd47422963e3
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Feb 20 17:35:57 2009 -0700
+
+    Added boolean return to ASql single row execute
+    
+    The boolean return value indicates whether or not result data was
+    actually retrieved or not. Also the execute function was added to the
+    ASql::Statement virtual list.
+
+ include/asql/asql.hpp  |   19 +++++++++++++++++++
+ include/asql/mysql.hpp |    4 +++-
+ src/mysql.cpp          |    5 +++--
+ 3 files changed, 25 insertions(+), 3 deletions(-)
+
+commit c81c8a612935e0d9f508082a88f3a0a46bf34bf5
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Feb 20 17:12:43 2009 -0700
+
+    Added single row fetch execution to ASql
+    
+    Added another version of ASql::MySQL::Statement::execute() for use with
+    queries that will result in a guaranteed single row of results. This
+    allows the user to query without the use of a container.
+
+ include/asql/mysql.hpp |   17 +++++++++++++++++
+ src/mysql.cpp          |    9 +++++++++
+ 2 files changed, 26 insertions(+), 0 deletions(-)
+
+commit a1d8fdf720800270c163f4749dda38ceaac0129a
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Feb 20 16:36:56 2009 -0700
+
+    Split MySQL statement execution up
+    
+    The task handled by ASql::MySQL::Statement::execute() has been split
+    into smaller sub functions. The first function being one to handle the
+    parameter binding and another to handle the fetching of a result row.
+
+ include/asql/mysql.hpp |   16 ++++++++++++++++
+ src/mysql.cpp          |   45 +++++++++++++++++++++++++++++----------------
+ 2 files changed, 45 insertions(+), 16 deletions(-)
+
+commit c899ecd233468dc1fa8f8c6e940fb5b026371a43
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Feb 20 15:58:53 2009 -0700
+
+    Removed ASql dependence on message.hpp
+    
+    The callback mechanism of the ASql part now takes an argument for it's own
+    error exception as opposed to a Fastcgipp::Message object. As a result a
+    new system of intermediate binding was coded into the asqlbind files.
+    This adds a small layer to execution of asynchronous queries but allows
+    the ASql part to be easily broken away from fastcgi++ and used on it's
+    own.
+
+ doc/doc.hpp                    |   14 +++++----
+ examples/database.cpp          |    7 +++--
+ include/Makefile.am            |    2 +-
+ include/asql/asql.hpp          |   57 ++++++++++++++++++++++++---------------
+ include/asql/mysql.hpp         |   31 ++++-----------------
+ include/fastcgi++/asqlbind.hpp |   42 +++++++++++++++++++++++++++++
+ src/Makefile.am                |    4 +++
+ src/asqlbind.cpp               |   12 ++++++++
+ src/mysql.cpp                  |    8 +++---
+ 9 files changed, 116 insertions(+), 61 deletions(-)
+
+commit 5561b1c9ee71a4e44e6ee952e6b3238afcc7cfc7
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Feb 20 12:04:12 2009 -0700
+
+    Moved SQL includes out of fastcgi++ directory
+    
+    Moved SQL related .hpp files out of the fastcgi++ directory into their
+    own asql directory. All documentation and examples adjusted accordingly.
+
+ doc/doc.hpp                                  |    4 ++--
+ doc/doxygen                                  |    2 +-
+ examples/database.cpp                        |    2 +-
+ include/Makefile.am                          |    4 ++--
+ include/{fastcgi++/sql.hpp => asql/asql.hpp} |    0
+ include/{fastcgi++ => asql}/mysql.hpp        |    2 +-
+ src/mysql.cpp                                |    2 +-
+ 7 files changed, 8 insertions(+), 8 deletions(-)
+
+commit 0d76c92d67a86ae8cac5229675cf0688efc3492e
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Feb 20 11:49:02 2009 -0700
+
+    Moved SQL facilities out of Fastcgipp namespace
+    
+    In order to facilitate the use of the SQL facilities outside of
+    fastcgi++, it has been moved out of the Fastcgipp namespace into it's
+    own ASql namespace. In addition the Makefile.am for the includes
+    directory was modified to not install the sql.hpp file in the event that
+    no SQL engines are discovered in the configure process. The MySQL error
+    exception was changed to not rely on the fastcgi++ parent exception.
+
+ doc/doc.hpp                 |   80 ++--
+ examples/database.cpp       |   28 +-
+ include/Makefile.am         |    5 +-
+ include/fastcgi++/mysql.hpp |  782 ++++++++++++++++++------------------
+ include/fastcgi++/sql.hpp   |  948 +++++++++++++++++++++----------------------
+ src/mysql.cpp               |   86 ++--
+ 6 files changed, 969 insertions(+), 960 deletions(-)
+
+commit 690078ae5e384f699d5b92eeb9ca5ebd36796ae0
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Feb 20 10:37:10 2009 -0700
+
+    Polished README file
+    
+    Wrapped text in the README file and changed it to an .in system with the
+    bootstrap script to allow for automatic insertion of date and version
+    values.
+
+ README    |   28 -------------------------
+ README.in |   68 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ bootstrap |    4 +++
+ 3 files changed, 72 insertions(+), 28 deletions(-)
+
+commit e1b91a60d6fd4bbdc164f8b741c30e499fbf6fda
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Feb 20 10:13:52 2009 -0700
+
+    Improved bootstrap script
+    
+    Modified the boostrap script to better automate the date and version
+    variables used by autotools, the NEWS file and the doxygen doc
+    generation. This involved using bash commands to automatically detect
+    and set the date and version. The NEWS and configure.ac files are set
+    with appropriate information by using an .in system with them and
+    sedding them in the boostrap file.
+
+ NEWS => NEWS.in                 |    2 +-
+ bootstrap                       |   16 +++++++++++-----
+ configure.ac => configure.ac.in |    2 +-
+ 3 files changed, 13 insertions(+), 7 deletions(-)
+
+commit cc34f1d5501a2754c545e568c936fd3001f58b46
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Feb 20 09:35:32 2009 -0700
+
+    Changed ChangeLog generation command
+    
+    Change GNU ChangeLog generation command from `git log` to
+    `git --no-pager log -M --stat`.
+
+ bootstrap |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 102e412dd3d0f2878b4af5f0b8a625df300172e5
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Thu Feb 19 11:29:46 2009 -0700
+
+    Fixed database tutorial in documentation
+    
+    The database tutorial full source was updated to reflect the new
+    methods used to index when deriving from Data::Set.
+
+ doc/doc.hpp |   45 +++++++++++----------------------------------
+ 1 files changed, 11 insertions(+), 34 deletions(-)
+
+commit fa099717ebe9add87a7a711d9d4cf493a519fd7e
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Jan 30 18:43:57 2009 -0700
+
+    Fixed template code bloat issue in Manager
+    
+    Because Fastcgipp::Manager was fully templated a large amount of code
+    was not being compiled into the library and instead compiled into
+    individual fastcgi++ applications. This was solved by deriving Manager
+    from a newly created non-template Fastcgipp::ManagerPar class with all
+    code that does not depend on the template parameter.
+
+ include/fastcgi++/manager.hpp |  228 +++++++++++++----------------------------
+ src/Makefile.am               |    1 +
+ src/manager.cpp               |  108 +++++++++++++++++++
+ 3 files changed, 182 insertions(+), 155 deletions(-)
+
+commit ec73353a1d2ae56cc19e42fa41421f8c6354a1cd
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Wed Jan 28 16:03:35 2009 -0700
+
+    Added changelog creation to boostrap file
+    
+    Added a line into boostrap to create a ChangeLog file from git log.
+
+ bootstrap |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 46fd788ce4367c91a8a7891b1320e05f0135bdea
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Wed Jan 28 15:58:36 2009 -0700
+
+    Fixed new boost license Makefile.am bug
+    
+    When the boost license file name was changed Makefile.am was not
+    adjusted accordingly.
+
+ Makefile.am |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 13fc874b8d849438202d1b6e3b23a3cecd3f0fb3
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Wed Jan 28 15:49:23 2009 -0700
+
+    Simplified derivation of Fastcgipp::Sql::Data::Set
+    
+    The derivation was simplified by reducing the virtual indexing functions
+    from three to one. This involved the creation of the class
+    Fastcgipp::Sql::Data::Index which holds all the data that the three
+    previous functions returned. Since the new class is constructed by a
+    large set of constructors that accept references to various types within
+    the derived data set the issue of mismatching types with void pointers
+    and creating debugging nightmares has been eliminated.
+
+ bootstrap                   |    2 +-
+ doc/doc.hpp                 |   54 +++------------
+ examples/database.cpp       |   33 ++-------
+ include/fastcgi++/mysql.hpp |   14 ++--
+ include/fastcgi++/sql.hpp   |  161 +++++++++++++++++++------------------------
+ src/mysql.cpp               |   36 +++++-----
+ 6 files changed, 111 insertions(+), 189 deletions(-)
+
+commit b8eb0bab8eb9f459095da278edadd13f26901f19
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Wed Jan 28 00:49:36 2009 -0700
+
+    Renamed boost license file
+    
+    The file is referred to as LICENSE_1_0.txt in the utf-8 code conversion
+    facet included in this source yet was named BOOST_LICENSE_1_0.txt. It is
+    now named properly.
+
+ BOOST_LICENSE_1_0.txt => LICENSE_1_0.txt |    0
+ 1 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 333c405cb7e59bd6d7196356551c010e65bf6e3a
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Tue Jan 27 17:11:47 2009 -0700
+
+    Updated tree for GIT usage
+    
+     * SVN commands removed from bootstrap script.
+     * Trunk reference in version removed from NEWS file.
+     * .svn directory exclusion removed from doc/doxygen.
+
+ NEWS        |    4 ++--
+ bootstrap   |    4 ++--
+ doc/doxygen |    2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 93a124f025dc68c7bb87bed05a12beadd5f0fad8
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Tue Jan 27 09:10:55 2009 +0000
+
+    Added surnames to copyright notices.
+    Changed exception generation structure.
+    Moved Fastcgipp::Message out of protocol.hpp into it's own header called message.hpp.
+    Added a bunch of SQL/MySQL goodies.
+
+ BOOST_LICENSE_1_0.txt             |   23 ++
+ Makefile.am                       |    2 +
+ NEWS                              |    6 +-
+ TODO                              |    3 +-
+ configure.ac                      |    5 +-
+ doc/doc.hpp                       |  573 +++++++++++++++++++++++++++++++-
+ examples/Makefile.am              |    2 +-
+ examples/database.cpp             |  181 ++++++++++
+ examples/echo.cpp                 |    2 +-
+ examples/session.cpp              |    2 +-
+ examples/showgnu.cpp              |    2 +-
+ examples/timer.cpp                |    2 +-
+ examples/upload.cpp               |    2 +-
+ examples/utf8-helloworld.cpp      |    2 +-
+ include/Makefile.am               |    6 +
+ include/fastcgi++/exceptions.hpp  |  176 ++---------
+ include/fastcgi++/fcgistream.hpp  |    2 +-
+ include/fastcgi++/http.hpp        |   34 +-
+ include/fastcgi++/manager.hpp     |    3 +-
+ include/fastcgi++/message.hpp     |   49 +++
+ include/fastcgi++/mysql.hpp       |  448 ++++++++++++++++++++++++
+ include/fastcgi++/protocol.hpp    |   27 +--
+ include/fastcgi++/request.hpp     |    2 +-
+ include/fastcgi++/sql.hpp         |  680 +++++++++++++++++++++++++++++++++++++
+ include/fastcgi++/transceiver.hpp |   50 +++-
+ src/Makefile.am                   |    7 +-
+ src/exceptions.cpp                |   66 ----
+ src/http.cpp                      |   40 +--
+ src/mysql.cpp                     |  401 ++++++++++++++++++++++
+ src/protocol.cpp                  |    6 +-
+ src/request.cpp                   |   10 +-
+ src/transceiver.cpp               |  106 ++++++-
+ 32 files changed, 2612 insertions(+), 308 deletions(-)
+
+commit c237e1fef33ae0e9ba3876f8e5290f2bbfcec6f4
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Thu Dec 11 08:20:50 2008 +0000
+
+    Converted entire project to autotools. Special thanks to Steve Vickers for his help with this.
+    Fixed some minor documentation inconsistencies.
+
+ AUTHORS                                 |    4 +
+ INSTALL                                 |  237 ++++++++
+ Makefile                                |  166 ------
+ Makefile.am                             |    5 +
+ NEWS                                    |    1 +
+ README                                  |   28 +
+ THANKS                                  |   10 +
+ TODO                                    |    1 -
+ bootstrap                               |   12 +
+ config/boost.m4                         |  889 +++++++++++++++++++++++++++++++
+ configure.ac                            |   29 +
+ doc.hpp => doc/doc.hpp                  |   18 +-
+ doxygen => doc/doxygen                  |    8 +-
+ examples/Makefile.am                    |    8 +
+ examples/{src => }/echo.cpp             |    0
+ examples/{src => }/session.cpp          |    0
+ examples/{src => }/showgnu.cpp          |    0
+ examples/{src => }/timer.cpp            |    0
+ examples/{src => }/upload.cpp           |    0
+ examples/{src => }/utf8-helloworld.cpp  |    0
+ include/Makefile.am                     |   21 +
+ include/fastcgi++/protocol.hpp          |   10 +
+ include/fastcgi++/transceiver.hpp       |    2 +-
+ src/Makefile.am                         |   22 +
+ {lib/src => src}/exceptions.cpp         |    0
+ {lib/src => src}/http.cpp               |    0
+ {lib/src => src}/protocol.cpp           |    0
+ {lib/src => src}/request.cpp            |    2 -
+ {lib/src => src}/transceiver.cpp        |    0
+ {lib/src => src}/utf8_codecvt_facet.cpp |    2 +
+ 30 files changed, 1286 insertions(+), 189 deletions(-)
+
+commit 842016da4da3b40cc6eda6e74e1f0dffca81cbc2
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Tue Dec 2 21:57:05 2008 +0000
+
+    * Fixed bug where Fastcgipp::Fcgistream<charT, traits>::Fcgibuf::xsputn() was not flushing the buffer on overflow. Thanks to Lukas Bossard for finding this issue.
+    * Removed inline declaration of some Fastcgipp::Fcgistream<charT, traits>::Fcgibuf functions.
+
+ include/fastcgi++/fcgistream.hpp |   18 ++----------------
+ lib/src/request.cpp              |   35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+), 16 deletions(-)
+
+commit 98251b28744c23931e35d2f3e76ae6e41e7654df
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Mon Nov 3 19:46:20 2008 +0000
+
+    Added session handling functionality
+
+ Makefile                   |    8 +-
+ doc.hpp                    |  368 +++++++++++++++++++++++++++++++++++++++++++-
+ examples/src/session.cpp   |  164 ++++++++++++++++++++
+ include/fastcgi++/http.hpp |  161 ++++++++++++++++++-
+ lib/src/http.cpp           |   25 +++
+ 5 files changed, 716 insertions(+), 10 deletions(-)
+
+commit 19311c748b0020a7a1cb60681c101a6c07d34410
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Thu Oct 30 03:31:12 2008 +0000
+
+    Fixed bug in parsing post data
+
+ lib/src/http.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 68b7c45e5702c65130a6ef2953d3ce8ee95a82b1
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Thu Oct 30 02:05:46 2008 +0000
+
+    Changed Fastcgipp::Http::Session to Fastcgipp::Http::Environment
+
+ doc.hpp                       |  102 ++++++++++++++++++++--------------------
+ examples/src/echo.cpp         |   44 +++++++++---------
+ examples/src/showgnu.cpp      |    4 +-
+ examples/src/upload.cpp       |    2 +-
+ include/fastcgi++/http.hpp    |    6 +-
+ include/fastcgi++/request.hpp |   10 ++--
+ lib/src/http.cpp              |   12 ++--
+ lib/src/request.cpp           |    6 +-
+ 8 files changed, 93 insertions(+), 93 deletions(-)
+
+commit 3a825df935fe37e83206a32d53ced96d5642532b
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Thu Oct 30 01:50:59 2008 +0000
+
+    Added base64 handling functions
+    Added function for parsing cookie/get strings
+
+ include/fastcgi++/http.hpp |  117 ++++++++++++++++++++++++++++++++++++++++++++
+ lib/src/http.cpp           |   26 +++++++++-
+ 2 files changed, 142 insertions(+), 1 deletions(-)
+
+commit 75579bce6499886853a14e48d6d57da8444b5e17
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Sun Sep 21 05:11:42 2008 +0000
+
+    Fixed minor error in showgnu tutorial
+
+ doc.hpp |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+commit faa92968a475cc640dda34861a2317b83ba8e1ff
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Thu Sep 18 05:57:48 2008 +0000
+
+    Updated todo list
+
+ TODO |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 64a0d36f8341bac7f831c2a26b3ff4578a1714f7
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Tue Sep 16 21:09:17 2008 +0000
+
+    Corrected wording in installation documentation
+
+ doc.hpp |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 3cbb04b0bb368a6f78e17e9004fa61a4d622a825
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Tue Sep 16 20:49:34 2008 +0000
+
+    Implemented the UTF-8 code conversion facet internally as opposed to using the operating systems locales. This fixed run-time errors cause by all the incorrectly implemented code conversion facets.
+
+ TODO                             |    1 -
+ doc.hpp                          |   28 +----
+ examples/src/echo.cpp            |    6 -
+ examples/src/timer.cpp           |    6 -
+ examples/src/upload.cpp          |    8 -
+ examples/src/utf8-helloworld.cpp |    6 -
+ include/fastcgi++/request.hpp    |    9 +-
+ include/utf8_codecvt.hpp         |    4 +
+ include/utf8_codecvt_facet.hpp   |  197 ++++++++++++++++++++++++++++
+ lib/src/http.cpp                 |    4 +-
+ lib/src/request.cpp              |   24 ++++
+ lib/src/utf8_codecvt_facet.cpp   |  269 ++++++++++++++++++++++++++++++++++++++
+ 12 files changed, 504 insertions(+), 58 deletions(-)
+
+commit a54f4dab228b75d868546ee3cc73c4c0abd61d00
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Mon Sep 15 17:50:09 2008 +0000
+
+    Added detail to the exceptions thrown by the library.
+
+ Makefile                         |   24 ++++--
+ TODO                             |    4 +-
+ doc.hpp                          |    1 +
+ examples/src/showgnu.cpp         |    2 +-
+ include/fastcgi++/exceptions.hpp |  161 ++++++++++++++++++++++++++++++++++++--
+ include/fastcgi++/http.hpp       |    8 +-
+ include/fastcgi++/manager.hpp    |    2 -
+ include/fastcgi++/protocol.hpp   |   63 +++++++++------
+ include/fastcgi++/request.hpp    |    4 +-
+ lib/src/exceptions.cpp           |   66 ++++++++++++++++
+ lib/src/http.cpp                 |   38 +++++----
+ lib/src/protocol.cpp             |    7 +-
+ lib/src/request.cpp              |   12 ++--
+ lib/src/transceiver.cpp          |    8 +-
+ 14 files changed, 317 insertions(+), 83 deletions(-)
+
+commit e1761f92386ee7ebceec7f5b1b479197859664de
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Sat Sep 13 03:37:36 2008 +0000
+
+    Fixed bug where parameters would not be processed if bunched into a single record.
+
+ include/fastcgi++/manager.hpp  |    2 +-
+ include/fastcgi++/protocol.hpp |    4 +-
+ lib/src/http.cpp               |  151 ++++++++++++++++++++-------------------
+ lib/src/protocol.cpp           |    3 +-
+ lib/src/transceiver.cpp        |    2 +-
+ 5 files changed, 84 insertions(+), 78 deletions(-)
+
+commit 060132b0918ad33c0fa62aa2cb518d49a78b47f1
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Sep 12 00:03:44 2008 +0000
+
+    Modified code so it will compile on all posix compliant systems. This involved changing the use of epoll_pwait() to poll() and using a dummy socket pair to wake up instead of a signal. Some template definitions and includes were changed to solve compiler errors as well.
+
+ TODO                              |    2 +
+ doc.hpp                           |    1 -
+ examples/src/echo.cpp             |    3 +-
+ include/fastcgi++/manager.hpp     |   14 ++------
+ include/fastcgi++/protocol.hpp    |    1 +
+ include/fastcgi++/transceiver.hpp |   47 +++++++++++++++++++++-----
+ lib/src/http.cpp                  |   12 +++---
+ lib/src/transceiver.cpp           |   67 +++++++++++++++++++++++-------------
+ 8 files changed, 94 insertions(+), 53 deletions(-)
+
+commit bf78054727c74324b2f6fd7256e84c1d8939344c
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Wed Sep 10 01:50:53 2008 +0000
+
+    Updated todo list
+
+ TODO |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit 53a7e68ca0b2979eff7d9eb8ca7fc506e586eb61
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Sun Sep 7 00:13:27 2008 +0000
+
+    Added dependencies to documentation main page
+
+ doc.hpp |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
+
+commit afe2c989c36a0404a19c391846b2a907e21b7d5d
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Sat Sep 6 23:40:25 2008 +0000
+
+    Corrected mixup of introductions in Delayed Response and Hello World tutorials
+
+ doc.hpp |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 31c7d60c4a3f027af27df038036e0968722cda6b
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Sat Sep 6 23:28:23 2008 +0000
+
+    Corrected introduction in Delay Response tutorial
+
+ doc.hpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 87fa97359c06b53a5e4b53e509df2892a6683140
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Sat Sep 6 23:01:09 2008 +0000
+
+    Added an entry to the todo list
+
+ TODO |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 884ed5253b89a5ab480e380372f4e0f443bccb33
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Sep 5 07:26:10 2008 +0000
+
+    Fixed Makefile bugs
+    Fixed documentation typo
+
+ Makefile |    8 ++++----
+ doc.hpp  |    2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 515bac8c8342e3e9ea3d4a9a1fe122546857aed0
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Sep 5 07:02:35 2008 +0000
+
+    Changed license to the GNU Lesser General Public License
+
+ COPYING                           |  827 +++++++------------------------------
+ TODO                              |    3 +-
+ examples/src/echo.cpp             |   36 +-
+ examples/src/showgnu.cpp          |   36 +-
+ examples/src/timer.cpp            |   36 +-
+ examples/src/upload.cpp           |   36 +-
+ examples/src/utf8-helloworld.cpp  |   36 +-
+ include/fastcgi++/exceptions.hpp  |   36 +-
+ include/fastcgi++/fcgistream.hpp  |   36 +-
+ include/fastcgi++/http.hpp        |   36 +-
+ include/fastcgi++/manager.hpp     |   36 +-
+ include/fastcgi++/protocol.hpp    |   36 +-
+ include/fastcgi++/request.hpp     |   36 +-
+ include/fastcgi++/transceiver.hpp |   36 +-
+ lib/src/http.cpp                  |   36 +-
+ lib/src/protocol.cpp              |   36 +-
+ lib/src/request.cpp               |   36 +-
+ lib/src/transceiver.cpp           |   36 +-
+ 18 files changed, 448 insertions(+), 958 deletions(-)
+
+commit c0cb0cf1e5849777478eefd546e1457db63ab2b4
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Fri Sep 5 06:46:30 2008 +0000
+
+    Added file descriptions to documentation and commented the exceptions header
+
+ TODO                              |    1 -
+ doc.hpp                           |    1 +
+ include/fastcgi++/exceptions.hpp  |    4 ++++
+ include/fastcgi++/fcgistream.hpp  |    1 +
+ include/fastcgi++/http.hpp        |    1 +
+ include/fastcgi++/manager.hpp     |    1 +
+ include/fastcgi++/protocol.hpp    |    1 +
+ include/fastcgi++/request.hpp     |    1 +
+ include/fastcgi++/transceiver.hpp |    1 +
+ lib/src/http.cpp                  |    1 +
+ lib/src/protocol.cpp              |    1 +
+ lib/src/request.cpp               |    1 +
+ lib/src/transceiver.cpp           |    1 +
+ 13 files changed, 15 insertions(+), 1 deletions(-)
+
+commit 86850ad4d8259af9c357d564914236f44f874c32
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Thu Sep 4 23:34:26 2008 +0000
+
+    Updated todo list
+
+ TODO |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit f938895f5cd6eacf0f0e0b081974087b6f9b2968
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Thu Sep 4 23:31:42 2008 +0000
+
+    Updated todo list
+
+ TODO |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+commit 65096d7077d0b322e32792689bdbff35a42e40ca
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Thu Sep 4 23:25:16 2008 +0000
+
+    Changed Makefile to automatically generate version and date values
+
+ Makefile |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+commit f3e029274c92424b3707af5668c7728a78720fa7
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Thu Sep 4 21:44:24 2008 +0000
+
+    Added installation instructions to documentation
+
+ Makefile |   17 ++++++++++++-----
+ doc.hpp  |   33 +++++++++++++++++++++++++++++++--
+ 2 files changed, 43 insertions(+), 7 deletions(-)
+
+commit fc7371277c9cc90762f761f99725a91c1a3d604e
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Thu Sep 4 20:55:38 2008 +0000
+
+    Added more tutorials
+
+ doc.hpp |  823 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 822 insertions(+), 1 deletions(-)
+
+commit 8493c1690251a876ea9b76daaed9410734e6fe75
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Thu Sep 4 20:55:18 2008 +0000
+
+    Minor adjustments to the timer example code
+
+ examples/src/timer.cpp |   16 +++++++++-------
+ 1 files changed, 9 insertions(+), 7 deletions(-)
+
+commit 0b2787aff0a4e49748862645ac8e05bfde3146a0
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Wed Sep 3 07:11:35 2008 +0000
+
+    Added general main page documentation along with a tutorial for the UTF-8 hello world example
+
+ doc.hpp |  222 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 222 insertions(+), 0 deletions(-)
+
+commit 00c74c91202c688baab6ee4458f7386fd18e2196
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Wed Sep 3 07:10:32 2008 +0000
+
+    Added general main page documentation along with a tutorial for the UTF-8 hello world example
+
+ Makefile |    2 +-
+ doxygen  |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit d153b578698c7643ee2180179baacf1b90ffcea0
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Wed Sep 3 06:56:51 2008 +0000
+
+    Fixed typos in comments
+
+ include/fastcgi++/transceiver.hpp |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+commit 3d8c0da97326c920db297f10773177db2045b04c
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Tue Sep 2 19:42:55 2008 +0000
+
+    Adding TODO list
+
+ TODO |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+commit 0b8b4494c5adbf4f3d4bf62457060bd170c51107
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Tue Sep 2 19:19:31 2008 +0000
+
+    Changed Fastcgi namespace to Fastcgipp
+
+ examples/src/echo.cpp             |   18 ++++++++--------
+ examples/src/showgnu.cpp          |   12 +++++-----
+ examples/src/timer.cpp            |   16 +++++++-------
+ examples/src/upload.cpp           |   10 ++++----
+ examples/src/utf8-helloworld.cpp  |   12 +++++-----
+ include/fastcgi++/exceptions.hpp  |    2 +-
+ include/fastcgi++/fcgistream.hpp  |    2 +-
+ include/fastcgi++/http.hpp        |    2 +-
+ include/fastcgi++/manager.hpp     |   22 +++++++++---------
+ include/fastcgi++/protocol.hpp    |    2 +-
+ include/fastcgi++/request.hpp     |    2 +-
+ include/fastcgi++/transceiver.hpp |    2 +-
+ lib/src/http.cpp                  |   42 ++++++++++++++++++------------------
+ lib/src/protocol.cpp              |    8 +++---
+ lib/src/request.cpp               |   24 ++++++++++----------
+ lib/src/transceiver.cpp           |   12 +++++-----
+ 16 files changed, 94 insertions(+), 94 deletions(-)
+
+commit 2d20a396e70b7388a9b90462e6049031f3969ea5
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Tue Sep 2 18:55:58 2008 +0000
+
+    Made doxygen stop generating documentation from .svn directories
+
+ Makefile |    4 ++--
+ doxygen  |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+commit ebb90584fb76ef866990dd4d6ed2c61a10663c36
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Tue Sep 2 18:42:49 2008 +0000
+
+    Removing doc directory
+
+commit 36ab31518058b95d55fe9f5e6955d7175fd25ed9
+Author: Eddie Carle <eddie@mailforce.net>
+Date:   Tue Sep 2 18:36:14 2008 +0000
+
+    Initial Import
+
+ COPYING                           |  674 +++++++++++++++++++
+ Makefile                          |  147 +++++
+ doxygen                           | 1310 +++++++++++++++++++++++++++++++++++++
+ examples/echo-form.html           |   13 +
+ examples/gnu.png                  |  Bin 0 -> 58587 bytes
+ examples/src/echo.cpp             |  158 +++++
+ examples/src/showgnu.cpp          |  148 +++++
+ examples/src/timer.cpp            |  168 +++++
+ examples/src/upload.cpp           |  124 ++++
+ examples/src/utf8-helloworld.cpp  |  125 ++++
+ examples/upload.html              |   12 +
+ include/fastcgi++/exceptions.hpp  |   45 ++
+ include/fastcgi++/fcgistream.hpp  |  156 +++++
+ include/fastcgi++/http.hpp        |  314 +++++++++
+ include/fastcgi++/manager.hpp     |  448 +++++++++++++
+ include/fastcgi++/protocol.hpp    |  416 ++++++++++++
+ include/fastcgi++/request.hpp     |  199 ++++++
+ include/fastcgi++/transceiver.hpp |  261 ++++++++
+ lib/src/http.cpp                  |  401 ++++++++++++
+ lib/src/protocol.cpp              |   44 ++
+ lib/src/request.cpp               |  224 +++++++
+ lib/src/transceiver.cpp           |  189 ++++++
+ 22 files changed, 5576 insertions(+), 0 deletions(-)

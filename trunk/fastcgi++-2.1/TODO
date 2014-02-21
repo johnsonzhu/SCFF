@@ -1,0 +1,7 @@
+THINGS TO DO
+ * Add additional SQL engines (sqlite, postgresql, mssql) to ASql.
+ * Use template specialization to improve Request::emptyBuffer().
+ * Add the ability to fillPosts() to handle non utf-8 character sets when
+   wchar_t is used as the Request template parameter. Possibly through iconv.
+ * Make requests time out
+ * Allow for multiple POST values of the same name

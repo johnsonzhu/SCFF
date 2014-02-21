@@ -1,0 +1,30 @@
+#create by jerrywang
+#modify by hunter 
+#!/bin/sh
+
+if [ $# -lt 1 ];then
+	echo "USAGE: $1 <filename>"
+fi
+for file in $*
+do
+  if [ ! -f "$file" ];then
+	continue
+  fi
+  echo $file
+#  chmod 644 $file
+  if [ -w $file ]
+  then
+   writable=1
+  else
+   writable=0
+  fi
+  sed -e "s///" $file > $file.hold
+  mv $file.hold $file
+  if [ "$writable" -eq "1" ]
+  then
+    chmod u+w $file
+  else
+    chmod u-w $file
+  fi
+done
+
