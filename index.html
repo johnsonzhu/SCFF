@@ -132,6 +132,251 @@ location ~/cgi/(\w+)/ {
     }</li>
 <li>访问fcgi，url如：domain.com/cgi/echo/getloc?gettest=abc</li>
 </ol>
+
+
+<h1><a name="scff" class="anchor" href="#scff1"><span class="octicon octicon-link"></span></a>SCFF编写CGI指南</h1>
+
+<h2 id="1autogen">1.    使用AutoGen生成代码框架</h2>
+
+<p>你提供一个业务C++头文件和一个目的目录，AutoGen它就会根据这个头文件在目的目录中生成框架代码。</p>
+
+<p>cd  auto<em>gen; ./auto</em>gen.sh</p>
+
+<p>USAGE  : ./auto_gen.sh <head_filename> <dest_dir></p>
+
+<p>EXAMPLE: ./auto<em>gen.sh aoitem</em>msg.h ~/my_test</p>
+
+<p>但是，AutoGen还没有智能到可以分析任意的C++头文件，所以这个业务头文件需要遵循一定的格式。</p>
+
+<p>文件testservice.h</p>
+
+<pre><code>#ifndef FCGI_DEMO_ECHO_H 
+#define FCGI_DEMO_ECHO_H 
+
+#include &lt;string&gt;
+#include &lt;stdint.h&gt;
+#include "help_macros4web.h"
+#include "web_view.h"
+#include "action_params.h"
+#include "web_svc_cntl.h"
+
+namespace fcgi
+{
+    namespace demo
+    {
+        namespace echo
+        {
+            SERVICE class CEcho
+            {
+                public:
+                    CEcho();
+                    ~CEcho();
+                    int Initialize(const char* pszVhostRootPath, const char* pszServiceConfigFile);
+                    void Reset();
+
+                public:
+                    EXPORT uint32_t GetLoc(
+                            const web_solution::web_framework::CActionParams&amp; rParams,
+                            web_solution::web_framework::CWebViewData&amp; rData,
+                            web_solution::web_framework::CWebSvcCntl&amp; rCntl
+                            );
+                public:
+                    int RenderGetLoc( std::string&amp; sOutputBuffer,
+                            web_solution::web_framework::CWebViewData&amp; rData,
+                            web_solution::web_framework::CWebSvcCntl&amp; rCntl
+                            );
+                private:
+                    int VerifyGetLoc(
+                            const web_solution::web_framework::CActionParams&amp; rParams);
+            };
+        }
+    }
+}
+
+#endif /* FCGI_DEMO_ECHO_H*/
+</code></pre>
+
+<p>SERVICE宏用于标识一个class为业务Service（CTestService），它的某些方法需要暴露出来供前端调用；</p>
+
+<p>EXPORT宏用于标识Service中的这个方法需要暴露给前端调用，AutoGen4Web会收集这些方法，并在粘接剂代码中生成路由分发代码。</p>
+
+<p>上述代码中，我们指定了一个名为Echo的Action，伴随这个Action还需要键入一个EchoRender和VerifyEchoInput方法，分别用于渲染输出页面和校验用户输入。</p>
+
+<p>完成头文件后保存到~/echo.h，然后执行下面步骤来生成框架：</p>
+
+<p>1）cd  auto_gen</p>
+
+<p>2）sh auto_gen.sh ~/ echo.h ~/webapps/生成框架，webapps下会生成一个echo目录：</p>
+
+<p><img src="https://raw.github.com/johnsonzhu/SCFF/master/image/11.jpg" alt="github" title="github" /></p>
+
+<p>lib——是自动生成的粘接剂代码；  </p>
+
+<p>src——下面是用户自己的代码，用户需要把自己编写的h和cpp等放入其中；</p>
+
+<p>cgi——里面的Makefile可构建出FCGI；</p>
+
+<p>websvc——暂时不适用（后续支持so加载）。</p>
+
+<p>3）cd src</p>
+
+<p>4）cp ~/echo.h . 复制业务头文件到src目录下；</p>
+
+<h2 id="echocpp">接下来开始编写业务逻辑代码，文件echo.cpp。</h2>
+
+<pre><code>#include &lt;string&gt;
+#include &lt;sstream&gt;
+#include &lt;iostream&gt;
+#include &lt;map&gt;
+#include &lt;vector&gt;
+
+#include "echo.h"
+
+using namespace std;
+using namespace web_solution::web_framework;
+using namespace fcgi::demo::echo;
+
+int CEcho::Initialize(const char* pszVhostRootPath, const char* pszServiceConfigFile)
+{
+    int iRet = 0;
+
+    return iRet;
+}
+
+uint32_t CEcho::GetLoc(
+                            const web_solution::web_framework::CActionParams&amp; rParams,
+                            web_solution::web_framework::CWebViewData&amp; rData,
+                            web_solution::web_framework::CWebSvcCntl&amp; rCntl
+                            )
+{
+    uint32_t dwRet = 0;
+    string areaData = "Hello Echo Demo!";
+
+    string gettest = "";
+    if (rParams.GetVal("gettest", gettest) != 0)
+    {
+        gettest = "";
+    }
+
+    string method = "";
+    if (rParams.GetVal("HttpMethod", method) != 0)
+    {
+        method = "";
+    }
+
+    string prid = "";
+    if (rParams.GetCookieVal("prid", prid) != 0)
+    {
+        prid = "";
+    }
+
+    areaData += "&lt;br /&gt;gettest get:" + gettest;
+    areaData += "&lt;br /&gt;prid cookie:" + prid;
+    areaData += "&lt;br /&gt;method:" + method;
+    rData.SetUserData("content", areaData);
+
+    cout &lt;&lt; "test cout"&lt;&lt;"&lt;br /&gt;";
+    // test cookie
+    rData.UpdateCookieVal("echo_test_cookie", "johnsonzhu", "Sat, 08 Nov 2014 09:26:30 GMT", "yixun.com");
+    rData.UpdateCookieVal("echo_test_cookie2", "johnsonzhu2", "Sat, 08 Nov 2014 09:26:30 GMT", "yixun.com");
+    rData.DelCookieVal("echo_test_cookie2");
+
+    // test 302
+    //string redirectUrl = "http://u.yixun.com/abc?noRedirect=1";
+    //rCntl.SetLocation(redirectUrl);
+    //rCntl.SetResult(302);
+    return dwRet;
+}
+
+int CEcho::RenderGetLoc( std::string&amp; sOutputBuffer,
+                            web_solution::web_framework::CWebViewData&amp; rData,
+                            web_solution::web_framework::CWebSvcCntl&amp; rCntl
+                            )
+{
+    uint32_t dwRet = 0;
+
+    //设置max-age,暂时设置10秒
+    uint32_t maxAge = 10;
+    rCntl.SetBrowserCacheExpireTime(maxAge);
+    rCntl.SetMimeEncoding("abc");
+    rCntl.SetMimeType("text/html; charset=utf-8");
+
+    string content = "";
+    string errMsg = "";
+    rData.GetUserData("errMsg", errMsg);
+    if (!errMsg.empty())
+    {
+        sOutputBuffer = errMsg;
+    }
+    else
+    {
+        rData.GetUserData("content", content);
+        sOutputBuffer = content;
+    }
+    return dwRet;
+}
+
+int CEcho::VerifyGetLoc(
+                            const web_solution::web_framework::CActionParams&amp; rParams)
+{
+    uint32_t dwRet = 0;
+    return dwRet;
+}
+
+CEcho::CEcho()
+{
+}
+
+CEcho::~CEcho()
+{
+}
+
+void CEcho::Reset(){}
+</code></pre>
+
+<h2 id="2cgi">2.    生成CGI</h2>
+
+<p>在cgi目录执行make，生成可执行的echo.fcgi。</p>
+
+<h2 id="3cgi">3.    部署CGI</h2>
+
+<p>3.1.    在webapps目录拷贝新目录echo</p>
+
+<p>3.2.    在echo目录下的cgi目录部署刚才编译好的echo.fcgi</p>
+
+<p>3.3.    在echo/bin目录下修改配置文件</p>
+
+<p>3.3.1.    service<em>manager.sh修改ServerName和进程数PROC</em>NUM</p>
+
+<p><img src="https://raw.github.com/johnsonzhu/SCFF/master/image/12.jpg" alt="github" title="github" /> </p>
+
+<p>3.3.2.    Protect.sh修改服务名和进程数</p>
+
+<p><img src="https://raw.github.com/johnsonzhu/SCFF/master/image/13.jpg" alt="github" title="github" /></p>
+
+<p>3.4.    启动服务
+在bin目录执行./service_manager.sh start</p>
+
+<p><img src="https://raw.github.com/johnsonzhu/SCFF/master/image/14.jpg" alt="github" title="github" /> </p>
+
+<p>另外可以查看cgi进程情况./service_manager.sh show</p>
+
+<p><img src="https://raw.github.com/johnsonzhu/SCFF/master/image/15.jpg" alt="github" title="github" /> </p>
+
+<p>3.5.    Nginx配置修改</p>
+
+<p>location ~/cgi/(\w+)/ {
+            fastcgi<em>pass unix:/dev/shm/$1.fcgi.sock;
+            fastcgi</em>param  SCRIPT<em>FILENAME $document</em>root$fastcgi<em>script</em>name;
+            include fastcgi_params;
+        }</p>
+
+<p>3.6.    访问服务</p>
+
+<p>访问fcgi，url如：domain.com/cgi/echo/getloc?gettest=abc</p>
+
+<p><img src="https://raw.github.com/johnsonzhu/SCFF/master/image/16.jpg" alt="github" title="github" /></p>
+
         </section>
 
         <aside id="sidebar">
