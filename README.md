@@ -4,6 +4,9 @@ SCFF
 Simple C++ FastCgi Framework 简单便捷的c++ FastCgi 框架，快速生成代码框架，关注业务CGI快速开发。对接各种提供fastcgi协议的服务器。
 [更多简介](http://johnsonzhu.github.io/SCFF/)
 
+[SCFF部署步骤](https://github.com/johnsonzhu/SCFF/blob/master/document/SCFF%E9%83%A8%E7%BD%B2%E6%AD%A5%E9%AA%A4.md)
+
+[SCFF编写CGI指南](https://github.com/johnsonzhu/SCFF/blob/master/document/SCFF%E7%BC%96%E5%86%99CGI%E6%8C%87%E5%8D%97.md)
 
 ====
 
