@@ -63,6 +63,73 @@ protect.sh 。
 
 <p>五 SCFF高性能FastCgi服务。
 性能压测：(4核、8GMEM)单机HelloWord达到4.3k/s，（空转nginx是4.6k/s）。贴近nginx的处理能力。</p>
+
+<h2 id="boost">一 安装Boost库（已安装，请忽略）</h2>
+
+<p>下载boost库：http://www.boost.org/</p>
+
+<p>编译boost库：</p>
+
+<ol>
+<li>解压源码包</li>
+<li>./bootstrap.sh --prefix=/home/johnsonzhu/local/boost/</li>
+<li>./bjam install 或者 ./b2</li>
+</ol>
+
+<h2 id="fastcgi">二 安装fastcgi++</h2>
+
+<ol>
+<li>./configure  --prefix=/home/johnsonzhu/local/fastcgipp --with-boost=/home/johnsonzhu/local/boost/</li>
+<li>make;make install;</li>
+</ol>
+
+<h2 id="ctemplate088">三 安装ctemplate.0.88</h2>
+
+<ol>
+<li>./configure  --prefix=/home/johnsonzhu/local/ctemplate.0.88</li>
+<li>make install</li>
+</ol>
+
+<h2 id="">四 设置环境变量</h2>
+
+<p>export HOME=/home/johnsonzhu/
+export FCGI<em>INC</em>EXPORT<em>PATH=$HOME/local/fastcgipp/include/
+export BOOST</em>INC<em>EXPORT</em>PATH=$HOME/local/boost/include/
+export CTEMPLATE<em>INC</em>EXPORT<em>PATH=$HOME/local/ctemplate.0.88/include/
+export WEBFRAMEWORK</em>INC<em>EXPORT</em>PATH=$HOME/local/webframework/include/</p>
+
+<p>export FCGI<em>LIB</em>EXPORT<em>PATH=$HOME/local/fastcgipp/lib/
+export BOOST</em>LIB<em>EXPORT</em>PATH=$HOME/local/boost/lib/
+export CTEMPLATE<em>LIB</em>EXPORT<em>PATH=$HOME/local/ctemplate.0.88/lib/
+export WEBFRAMEWORK</em>LIB<em>EXPORT</em>PATH=$HOME/local/webframework/lib/</p>
+
+<h2 id="webframework">五 安装webframework</h2>
+
+<ol>
+<li>make</li>
+<li>make install  （注意设置好环境变量，根据环境变量安装webframework）</li>
+</ol>
+
+<h2 id="echo">六 编译Echo例子</h2>
+
+<ol>
+<li>cd example/echo</li>
+<li>make</li>
+</ol>
+
+<h2 id="echo">七 部署Echo例子</h2>
+
+<ol>
+<li>cd webapps/echo/bin</li>
+<li>启动 ./service_manager.sh start</li>
+<li>修改Nginx配置，如
+location ~/cgi/(\w+)/ {
+        fastcgi<em>pass unix:/dev/shm/$1.fcgi.sock;
+        fastcgi</em>param  SCRIPT<em>FILENAME $document</em>root$fastcgi<em>script</em>name;
+        include fastcgi_params;
+    }</li>
+<li>访问fcgi，url如：domain.com/cgi/echo/getloc?gettest=abc</li>
+</ol>
         </section>
 
         <aside id="sidebar">
